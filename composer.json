@@ -1,0 +1,24 @@
+{
+    "name": "coolseven/huawei-frs-sdk",
+    "type": "library",
+    "description": "Huawei Frs (Face Recognition Service) SDK for PHP",
+    "keywords": ["huawei", "frs", "sdk"],
+    "homepage": "https://github.com/coolseven/huaweicloud-sdk-php-frs",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "coolseven",
+            "email": "cooleven2013@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0"
+    },
+    "autoload": {
+        "psr-4": {"HuaweiFrsSdk\\": "src/HuaweiFrsSdk"},
+        "files": ["src/HuaweiFrsSdk/functions.php"]
+    }
+}
