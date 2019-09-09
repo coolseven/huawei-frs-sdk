@@ -6,8 +6,11 @@ namespace HuaweiFrsSdk\Client;
 use HuaweiFrsSdk\Access\FrsAccess;
 use HuaweiFrsSdk\Access\HttpClient\Options;
 use HuaweiFrsSdk\Client\Param\AuthInfo;
+use HuaweiFrsSdk\Client\Service\CompareService;
+use HuaweiFrsSdk\Client\Service\DetectService;
 use HuaweiFrsSdk\Client\Service\FaceService;
 use HuaweiFrsSdk\Client\Service\FaceSetService;
+use HuaweiFrsSdk\Client\Service\LiveDetectService;
 use HuaweiFrsSdk\Client\Service\SearchService;
 
 class FrsClient
@@ -32,6 +35,18 @@ class FrsClient
      * @var FaceService
      */
     private $faceService;
+    /**
+     * @var DetectService
+     */
+    private $detectService;
+    /**
+     * @var CompareService
+     */
+    private $compareService;
+    /**
+     * @var LiveDetectService
+     */
+    private $liveDetectService;
 
     /**
      * FrsClient constructor.
@@ -54,6 +69,9 @@ class FrsClient
         $this->searchService = new SearchService($this->frsAccess, $this->projectId);
         $this->faceSetService = new FaceSetService($this->frsAccess, $this->projectId);
         $this->faceService = new FaceService($this->frsAccess, $this->projectId);
+        $this->detectService = new DetectService($this->frsAccess, $this->projectId);
+        $this->compareService = new CompareService($this->frsAccess, $this->projectId);
+        $this->liveDetectService = new LiveDetectService($this->frsAccess, $this->projectId);
     }
 
     /**
@@ -72,5 +90,29 @@ class FrsClient
     public function getFaceService(): FaceService
     {
         return $this->faceService;
+    }
+
+    /**
+     * @return DetectService
+     */
+    public function getDetectService() : DetectService
+    {
+        return $this->detectService;
+    }
+
+    /**
+     * @return CompareService
+     */
+    public function getCompareService() : CompareService
+    {
+        return $this->compareService;
+    }
+
+    /**
+     * @return LiveDetectService
+     */
+    public function getLiveDetectService() : LiveDetectService
+    {
+        return $this->liveDetectService;
     }
 }

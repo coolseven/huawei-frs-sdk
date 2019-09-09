@@ -69,4 +69,19 @@ class FrsPaths
      * DELETE '/v1/{project_id}/face-sets/{face_set_name}/faces/batch'
      */
     public const FACE_BATCH_DELETE_BY_FILTER = '/v1/%s/face-sets/%s/faces/batch';
+
+    /**
+     * POST '/v1/{project_id}/face-detect'
+     */
+    public const FACE_DETECT = '/v1/%s/face-detect';
+
+    /**
+     * POST '/v1/{project_id}/face-compare'
+     */
+    public const FACE_COMPARE = '/v1/%s/face-compare';
+
+    /**
+     * POST '/v1/{project_id}/live-detect'
+     */
+    public const LIVE_DETECT = '/v1/%s/live-detect';
 }
