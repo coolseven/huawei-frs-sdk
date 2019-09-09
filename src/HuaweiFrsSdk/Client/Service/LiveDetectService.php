@@ -62,7 +62,7 @@ class LiveDetectService
                 $body['video_url'] = $video;
                 break;
             default:
-                throw new InvalidArgumentException("$videoType must be one of base64  / obs_url ,but $videoType provided");
+                throw new InvalidArgumentException("$videoType must be one of base64  / obs_url ,$videoType given");
         }
 
         $body['actions'] = $videoLiveDetectActions->getActions();

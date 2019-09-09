@@ -143,7 +143,7 @@ class SearchService
                 $body['image_url'] = $image;
                 break;
             default:
-                throw new InvalidArgumentException("imageType must be one of image_base64 / face_id / image_url ,but $imageType provided");
+                throw new InvalidArgumentException("imageType must be one of base64 / face_id / obs_url ,$imageType given");
         }
 
         $body['top_n'] = $topN;

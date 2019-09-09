@@ -149,7 +149,7 @@ class FaceService
                 $body['image_url'] = $image;
                 break;
             default:
-                throw new InvalidArgumentException("imageType must be one of image_base64  / image_url / local_file ,but $imageType provided");
+                throw new InvalidArgumentException("imageType must be one of base64  / obs_url ,$imageType given");
         }
 
         if (!empty($externalImageId)) {
