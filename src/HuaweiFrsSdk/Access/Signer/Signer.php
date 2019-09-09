@@ -101,7 +101,7 @@ class Signer
 
         $signedHeaderKeysString = implode(';',$signedHeaderKeys);
 
-        $hash = hash('sha256',$signed->getBody());
+        $hash = hash('sha256',$signed->getBody()->getContents());
 
         return "$method\n$path\n$queryString\n$headers\n$signedHeaderKeysString\n$hash";
     }

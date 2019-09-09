@@ -42,16 +42,9 @@ class FrsAccess
         $this->httpClient = new GuzzleClient($connectionTimeout);
     }
 
-    /**
-     * @param string $uri
-     * @param array  $body
-     * @param string $contentType
-     *
-     * @return ResponseInterface
-     */
-    public function post( string $uri,array $body , string $contentType = ContentTypes::JSON): ResponseInterface
+    public function get(string $uri,string $contentType = ContentTypes::JSON): ResponseInterface
     {
-        $unsignedRequest = $this->createUnsignedRequest($uri,$body,$contentType);
+        $unsignedRequest = $this->createUnsignedRequest(HttpMethods::GET,$uri,null,$contentType);
 
         $signedRequest = $this->signer->sign($unsignedRequest);
 
@@ -60,25 +53,58 @@ class FrsAccess
 
     /**
      * @param string $uri
-     * @param array  $body
+     * @param array|null  $body
      * @param string $contentType
+     *
+     * @return ResponseInterface
+     */
+    public function post( string $uri,array $body , string $contentType = ContentTypes::JSON): ResponseInterface
+    {
+        $unsignedRequest = $this->createUnsignedRequest(HttpMethods::POST,$uri,$body,$contentType);
+
+        $signedRequest = $this->signer->sign($unsignedRequest);
+
+        return $this->httpClient->access($signedRequest);
+    }
+
+    public function delete(string $uri, array $body = [] , string $contentType = ContentTypes::JSON): ResponseInterface
+    {
+        $unsignedRequest = $this->createUnsignedRequest(HttpMethods::DELETE,$uri,$body,$contentType);
+
+        $signedRequest = $this->signer->sign($unsignedRequest);
+
+        return $this->httpClient->access($signedRequest);
+    }
+
+    /**
+     * @param string     $method
+     * @param string     $uri
+     * @param array|null $body
+     * @param string     $contentType
      *
      * @return UnSignedRequest
      */
-    private function createUnsignedRequest( string $uri, array $body , string $contentType) : UnSignedRequest
+    private function createUnsignedRequest(string $method, string $uri, $body , string $contentType) : UnSignedRequest
     {
         $scheme = parse_url($this->authInfo->getEndpoint(),PHP_URL_SCHEME);
         $host = parse_url($this->authInfo->getEndpoint(),PHP_URL_HOST);
 
         $requestUri = $scheme . '://' . $host . $uri;
 
+        if (empty($body)) {
+            $bodyString = '';
+        }else{
+            $bodyString = \GuzzleHttp\json_encode($body);
+        }
+
         $unsignedRequest = new UnSignedRequest(
-            HttpMethods::POST,
+            $method,
             new Uri($requestUri),
             ['content-type' => $contentType],
-            \GuzzleHttp\json_encode($body)
+            $bodyString
         );
 
         return $unsignedRequest;
     }
+
 }

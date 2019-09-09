@@ -62,6 +62,9 @@ class SearchServiceTest extends PHPUnit_Framework_TestCase
 
         $response = $frsClient->getSearchService()->searchFaceByBase64($this->faceSetName,$imageBase64,100);
 
+        // {"faces":[]}
+        echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
+
         $this->assertEquals(200,$response->getStatusCode());
     }
 
@@ -69,6 +72,9 @@ class SearchServiceTest extends PHPUnit_Framework_TestCase
     {
         $frsClient = new FrsClient($this->authInfo,$this->projectId);
         $response = $frsClient->getSearchService()->searchFaceByFaceId($this->faceSetName,$this->faceId,1000,0.99);
+
+        // {"faces":[{"face_id":"RG16TGCu","external_image_id":"40f0fdce-7797-46e5-9baa-fc11c5cc5d13","bounding_box":{"width":97,"top_left_x":49,"top_left_y":60,"height":97},"similarity":1.0}]}
+        echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
     }

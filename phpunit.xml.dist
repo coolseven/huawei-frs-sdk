@@ -20,8 +20,9 @@
         <env name="HUAWEI_FRS_SK" value="xxx"/>
         <env name="HUAWEI_FRS_ENDPOINT" value="xxx"/>
         <env name="HUAWEI_FRS_PROJECT_ID" value="xxx"/>
-        <env name="HUAWEI_FRS_FACE_SET_NAME" value="faceset_test"/>
-        <env name="HUAWEI_FRS_SEARCH_FACE_ID" value="RG16TGCu"/>
+        <env name="HUAWEI_FRS_FACE_SET_NAME" value="xxx"/>
+        <env name="HUAWEI_FRS_TEMP_FACE_SET_NAME" value="xxx"/>
+        <env name="HUAWEI_FRS_SEARCH_FACE_ID" value="xxx"/>
     </php>
 
 </phpunit>

@@ -5,7 +5,9 @@ namespace HuaweiFrsSdk\Access\HttpClient;
 
 
 use GuzzleHttp\Client;
+use HuaweiFrsSdk\Access\HttpRequest\HttpMethods;
 use HuaweiFrsSdk\Access\HttpRequest\SignedRequest;
+use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 
 class GuzzleClient
@@ -31,12 +33,30 @@ class GuzzleClient
             'timeout'  => $this->connectionTimeOutInSeconds,
         ]);
 
-        $response = $client->post($r->getUri(),[
-            'headers' => $r->getHeaders(),
-            'body'  => $r->getBody(),
-            'http_error' => true,
-        ]);
+        $method = strtoupper($r->getMethod());
 
-        return $response;
+        switch ($method) {
+            case HttpMethods::GET:
+                return $client->get($r->getUri(),[
+                    'headers' => $r->getHeaders(),
+                    'body'  => $r->getBody(),
+                    'http_error' => true,
+                ]);
+            case HttpMethods::POST:
+                return $client->post($r->getUri(),[
+                    'headers' => $r->getHeaders(),
+                    'body'  => $r->getBody(),
+                    'http_error' => true,
+                ]);
+            case HttpMethods::DELETE:
+                return $client->delete($r->getUri(),[
+                    'headers' => $r->getHeaders(),
+                    'body'  => $r->getBody(),
+                    'http_error' => true,
+                ]);
+            default:
+                throw new InvalidArgumentException(
+                    "Invalid Http Method. http method should be one of get/post/put/delete/head , {$method} given.");
+        }
     }
 }

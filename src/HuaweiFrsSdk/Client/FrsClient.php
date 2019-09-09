@@ -6,6 +6,7 @@ namespace HuaweiFrsSdk\Client;
 use HuaweiFrsSdk\Access\FrsAccess;
 use HuaweiFrsSdk\Access\HttpClient\Options;
 use HuaweiFrsSdk\Client\Param\AuthInfo;
+use HuaweiFrsSdk\Client\Service\FaceSetService;
 use HuaweiFrsSdk\Client\Service\SearchService;
 
 class FrsClient
@@ -22,6 +23,10 @@ class FrsClient
      * @var SearchService
      */
     private $searchService;
+    /**
+     * @var FaceSetService
+     */
+    private $faceSetService;
 
     /**
      * FrsClient constructor.
@@ -42,6 +47,7 @@ class FrsClient
     private function initServices() : void
     {
         $this->searchService = new SearchService($this->frsAccess, $this->projectId);
+        $this->faceSetService = new FaceSetService($this->frsAccess, $this->projectId);
     }
 
     /**
@@ -50,5 +56,10 @@ class FrsClient
     public function getSearchService() : SearchService
     {
         return $this->searchService;
+    }
+
+    public function getFaceSetService(): FaceSetService
+    {
+        return $this->faceSetService;
     }
 }
