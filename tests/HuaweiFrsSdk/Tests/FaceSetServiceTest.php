@@ -5,8 +5,8 @@ namespace HuaweiFrsSdk\Tests;
 
 use HuaweiFrsSdk\Client\Param\AuthInfo;
 use HuaweiFrsSdk\Client\FrsClient;
-use HuaweiFrsSdk\Client\Param\CreateExternalFields;
-use HuaweiFrsSdk\Client\Param\ExternalField;
+use HuaweiFrsSdk\Client\Param\ExternalFieldDefinitions;
+use HuaweiFrsSdk\Client\Param\ExternalFieldDefinition;
 use HuaweiFrsSdk\Client\Param\FieldTypes;
 use PHPUnit_Framework_TestCase;
 
@@ -70,7 +70,28 @@ class FaceSetServiceTest extends PHPUnit_Framework_TestCase
 
         $response = $frsClient->getFaceSetService()->getAllFaceSets();
 
-        // {"face_sets_info":[{"face_number":66808,"face_set_id":"ER4HtVIY","face_set_name":"faceset_test","create_date":"2019-07-04 08:40:08","face_set_capacity":100000,"external_fields":{"number":{"type":"integer"},"id":{"type":"string"},"timestamp":{"type":"long"}}}]}
+        // {
+        //    "face_sets_info": [
+        //        {
+        //            "face_number": 66808,
+        //            "face_set_id": "ER4HtVIY",
+        //            "face_set_name": "faceset_test",
+        //            "create_date": "2019-07-04 08:40:08",
+        //            "face_set_capacity": 100000,
+        //            "external_fields": {
+        //                "number": {
+        //                    "type": "integer"
+        //                },
+        //                "id": {
+        //                    "type": "string"
+        //                },
+        //                "timestamp": {
+        //                    "type": "long"
+        //                }
+        //            }
+        //        }
+        //    ]
+        //}
         echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
@@ -82,7 +103,26 @@ class FaceSetServiceTest extends PHPUnit_Framework_TestCase
 
         $response = $frsClient->getFaceSetService()->getFaceSet($this->faceSetName);
 
-        // {"face_set_info":{"face_number":66808,"face_set_id":"ER4HtVIY","face_set_name":"faceset_test","create_date":"2019-07-04 08:40:08","face_set_capacity":100000,"external_fields":{"number":{"type":"integer"},"id":{"type":"string"},"timestamp":{"type":"long"}}}}
+        // {
+        //    "face_set_info": {
+        //        "face_number": 66808,
+        //        "face_set_id": "ER4HtVIY",
+        //        "face_set_name": "faceset_test",
+        //        "create_date": "2019-07-04 08:40:08",
+        //        "face_set_capacity": 100000,
+        //        "external_fields": {
+        //            "number": {
+        //                "type": "integer"
+        //            },
+        //            "id": {
+        //                "type": "string"
+        //            },
+        //            "timestamp": {
+        //                "type": "long"
+        //            }
+        //        }
+        //    }
+        //}
         echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
@@ -92,17 +132,45 @@ class FaceSetServiceTest extends PHPUnit_Framework_TestCase
     {
         $frsClient = new FrsClient($this->authInfo,$this->projectId);
 
-        $externalFields = new CreateExternalFields([
-            new ExternalField('etf_01',FieldTypes::STRING),
-            new ExternalField('etf_02',FieldTypes::DOUBLE),
-            new ExternalField('etf_03',FieldTypes::BOOLEAN),
-            new ExternalField('etf_04',FieldTypes::FLOAT),
-            new ExternalField('etf_05',FieldTypes::INTEGER),
-            new ExternalField('etf_06',FieldTypes::LONG),
+        $externalFields = new ExternalFieldDefinitions([
+            new ExternalFieldDefinition('etf_01',FieldTypes::STRING),
+            new ExternalFieldDefinition('etf_02',FieldTypes::DOUBLE),
+            new ExternalFieldDefinition('etf_03',FieldTypes::BOOLEAN),
+            new ExternalFieldDefinition('etf_04',FieldTypes::FLOAT),
+            new ExternalFieldDefinition('etf_05',FieldTypes::INTEGER),
+            new ExternalFieldDefinition('etf_06',FieldTypes::LONG),
         ]);
         $response = $frsClient->getFaceSetService()->createFaceSet($this->tempFaceSetName,100000,$externalFields);
 
-        // {"face_set_info":{"face_number":0,"face_set_id":"5PtLHVrh","face_set_name":"face_sets_ut_01","create_date":"2019-09-09 11:33:11","face_set_capacity":100000,"external_fields":{"etf_01":{"type":"string"},"etf_02":{"type":"double"},"etf_03":{"type":"boolean"},"etf_04":{"type":"float"},"etf_05":{"type":"integer"},"etf_06":{"type":"long"}}}}
+        // {
+        //    "face_set_info": {
+        //        "face_number": 0,
+        //        "face_set_id": "5PtLHVrh",
+        //        "face_set_name": "face_sets_ut_01",
+        //        "create_date": "2019-09-09 11:33:11",
+        //        "face_set_capacity": 100000,
+        //        "external_fields": {
+        //            "etf_01": {
+        //                "type": "string"
+        //            },
+        //            "etf_02": {
+        //                "type": "double"
+        //            },
+        //            "etf_03": {
+        //                "type": "boolean"
+        //            },
+        //            "etf_04": {
+        //                "type": "float"
+        //            },
+        //            "etf_05": {
+        //                "type": "integer"
+        //            },
+        //            "etf_06": {
+        //                "type": "long"
+        //            }
+        //        }
+        //    }
+        //}
         echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
@@ -114,7 +182,9 @@ class FaceSetServiceTest extends PHPUnit_Framework_TestCase
 
         $response = $frsClient->getFaceSetService()->deleteFaceSet($this->tempFaceSetName);
 
-        // {"face_set_name":"face_sets_ut_01"}
+        // {
+        //    "face_set_name": "face_sets_ut_01"
+        //}
         echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());

@@ -4,17 +4,17 @@
 namespace HuaweiFrsSdk\Client\Param;
 
 
-class CreateExternalFields
+class ExternalFieldDefinitions
 {
     /**
-     * @var ExternalField[]
+     * @var ExternalFieldDefinition[]
      */
     private $externalFields;
 
     /**
      * CreateExternalFields constructor.
      *
-     * @param ExternalField[] $externalFields
+     * @param ExternalFieldDefinition[] $externalFields
      */
     public function __construct(array $externalFields = [])
     {
@@ -23,7 +23,7 @@ class CreateExternalFields
         }
     }
 
-    public function addExternalField(ExternalField $externalField): void
+    public function addExternalField(ExternalFieldDefinition $externalField): void
     {
         $this->externalFields[$externalField->getKey()] = ['type' => $externalField->getType()];
     }

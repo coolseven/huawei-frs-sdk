@@ -29,4 +29,19 @@ class FrsPaths
      * DELETE '/v1/{project_id}/face-sets/{face_set_name}'
      */
     public const FACE_SET_DELETE = '/v1/%s/face-sets/%s';
+
+    /**
+     * GET '/v1/{project_id}/face-sets/{face_set_name}?offset={offset}&limit={limit}'
+     */
+    public const FACE_GET_RANGE = '/v1/%s/face-sets/%s/faces?offset=%d&limit=%d';
+
+    /**
+     * GET '/v1/{project_id}/face-sets/{face_set_name}/faces?face_id={face_id}'
+     */
+    public const FACE_GET_ONE = '/v1/%s/face-sets/%s/faces?face_id=%s';
+
+    /**
+     * POST '/v1/{project_id}/face-sets/{face_set_name}/faces'
+     */
+    public const FACE_ADD     = '/v1/%s/face-sets/%s/faces';
 }

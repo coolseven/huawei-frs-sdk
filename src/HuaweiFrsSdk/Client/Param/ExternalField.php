@@ -11,20 +11,14 @@ class ExternalField
      */
     private $key;
     /**
-     * @var string
+     * @var
      */
-    private $type;
+    private $value;
 
-    /**
-     * ExternalField constructor.
-     *
-     * @param string $key
-     * @param string $type
-     */
-    public function __construct(string $key, string $type)
+    public function __construct(string $key, $value)
     {
         $this->key = $key;
-        $this->type = $type;
+        $this->value = $value;
     }
 
     /**
@@ -36,10 +30,10 @@ class ExternalField
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getType(): string
+    public function getValue()
     {
-        return $this->type;
+        return $this->value;
     }
 }
