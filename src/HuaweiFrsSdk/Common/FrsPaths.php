@@ -1,9 +1,4 @@
 <?php
-/**
- * PROJECT: huawei-frs-sdk
- * FILENAME: FrsUris.php
- * HOMEPAGE: https://github.com/coolseven/huaweicloud-sdk-php-frs
- */
 
 namespace HuaweiFrsSdk\Common;
 
