@@ -9,12 +9,12 @@ namespace HuaweiFrsSdk\Client\Service;
 
 
 use HuaweiFrsSdk\Access\FrsAccess;
-use HuaweiFrsSdk\Access\HttpResponse;
 use HuaweiFrsSdk\Client\Param\SearchReturnFields;
 use HuaweiFrsSdk\Client\Param\SearchSort;
-use HuaweiFrsSdk\Common\FrsUris;
+use HuaweiFrsSdk\Common\FrsPaths;
 use HuaweiFrsSdk\Common\ImageTypes;
 use InvalidArgumentException;
+use Psr\Http\Message\ResponseInterface;
 
 class SearchService
 {
@@ -48,9 +48,7 @@ class SearchService
      * @param SearchReturnFields|null $searchReturnFields
      * @param string|null             $filter
      *
-     * @return HttpResponse
-     * @throws \HuaweiFrsSdk\Common\FrsClientException
-     * @throws \HuaweiFrsSdk\Common\FrsServerException
+     * @return ResponseInterface
      */
     public function searchFaceByBase64(
         string $faceSetName,
@@ -60,7 +58,7 @@ class SearchService
         SearchSort $searchSort = null,
         SearchReturnFields $searchReturnFields = null,
         string $filter = null
-    ) : HttpResponse
+    ): ResponseInterface
     {
         return $this->searchFace($faceSetName,ImageTypes::BASE64,$imageBase64,$topN,$threshold,$searchSort,$searchReturnFields,$filter);
     }
@@ -74,9 +72,7 @@ class SearchService
      * @param SearchReturnFields|null $searchReturnFields
      * @param string|null             $filter
      *
-     * @return HttpResponse
-     * @throws \HuaweiFrsSdk\Common\FrsClientException
-     * @throws \HuaweiFrsSdk\Common\FrsServerException
+     * @return ResponseInterface
      */
     public function searchFaceByFaceId(
         string $faceSetName,
@@ -86,7 +82,7 @@ class SearchService
         SearchSort $searchSort = null,
         SearchReturnFields $searchReturnFields = null,
         string $filter = null
-    ) : HttpResponse
+    ): ResponseInterface
     {
         return $this->searchFace($faceSetName,ImageTypes::FACE_ID,$faceId,$topN,$threshold,$searchSort,$searchReturnFields,$filter);
     }
@@ -100,9 +96,7 @@ class SearchService
      * @param SearchReturnFields|null $searchReturnFields
      * @param string|null             $filter
      *
-     * @return HttpResponse
-     * @throws \HuaweiFrsSdk\Common\FrsClientException
-     * @throws \HuaweiFrsSdk\Common\FrsServerException
+     * @return ResponseInterface
      */
     public function searchFaceByObsUrl(
         string $faceSetName,
@@ -112,7 +106,7 @@ class SearchService
         SearchSort $searchSort = null,
         SearchReturnFields $searchReturnFields = null,
         string $filter = null
-    ) : HttpResponse
+    ): ResponseInterface
     {
         return $this->searchFace($faceSetName,ImageTypes::OBS_URL,$obsUrl,$topN,$threshold,$searchSort,$searchReturnFields,$filter);
     }
@@ -127,9 +121,7 @@ class SearchService
      * @param SearchReturnFields|null $searchReturnFields
      * @param string|null             $filter
      *
-     * @return HttpResponse
-     * @throws \HuaweiFrsSdk\Common\FrsClientException
-     * @throws \HuaweiFrsSdk\Common\FrsServerException
+     * @return ResponseInterface
      */
     private function searchFace(
         string $faceSetName,
@@ -140,9 +132,9 @@ class SearchService
         SearchSort $searchSort = null,
         SearchReturnFields $searchReturnFields = null,
         string $filter = null
-    ) : HttpResponse
+    ): ResponseInterface
     {
-        $uri = sprintf(FrsUris::FACE_SEARCH_URI, $this->projectId, $faceSetName);
+        $uri = sprintf(FrsPaths::FACE_SEARCH, $this->projectId, $faceSetName);
         $body = [];
 
         switch ( $imageType ) {
@@ -162,11 +154,11 @@ class SearchService
         $body['top_n'] = $topN;
         $body['threshold'] = $threshold;
 
-        if (!empty($searchSort)) {
+        if (null !== $searchSort) {
             $body['sort'] = $searchSort->getSearchSort();
         }
 
-        if (!empty($searchReturnFields)) {
+        if (null !== $searchReturnFields) {
             $body['return_fields'] = $searchReturnFields->getReturnFields();
         }
 
@@ -174,6 +166,6 @@ class SearchService
             $body['filter'] = $filter;
         }
 
-        return $this->accessService->post($uri,$body,'application/json');
+        return $this->accessService->post($uri,$body);
     }
 }

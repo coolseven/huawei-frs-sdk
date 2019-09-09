@@ -5,19 +5,16 @@
  * HOMEPAGE: https://github.com/coolseven/huaweicloud-sdk-php-frs
  */
 
-namespace HuaweiFrsSdk\Client\Service;
+namespace HuaweiFrsSdk\Client;
 
 
 use HuaweiFrsSdk\Access\FrsAccess;
 use HuaweiFrsSdk\Access\HttpClient\Options;
 use HuaweiFrsSdk\Client\Param\AuthInfo;
+use HuaweiFrsSdk\Client\Service\SearchService;
 
 class FrsClient
 {
-    /**
-     * @var AuthInfo
-     */
-    private $authInfo;
     /**
      * @var string
      */
@@ -40,10 +37,10 @@ class FrsClient
      */
     public function __construct( AuthInfo $authInfo, string $projectId, int $connectionTimeout = Options::DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS)
     {
-        $this->authInfo = $authInfo;
         $this->projectId = $projectId;
 
-        $this->frsAccess = new FrsAccess($this->authInfo, $connectionTimeout);
+        $this->frsAccess = new FrsAccess($authInfo, $connectionTimeout);
+
         $this->initServices();
     }
 

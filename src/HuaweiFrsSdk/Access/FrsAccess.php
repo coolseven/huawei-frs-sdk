@@ -8,8 +8,14 @@
 namespace HuaweiFrsSdk\Access;
 
 
-use HuaweiFrsSdk\Access\HttpClient\CurlClient;
+use GuzzleHttp\Psr7\Uri;
+use HuaweiFrsSdk\Access\HttpClient\GuzzleClient;
+use HuaweiFrsSdk\Access\HttpRequest\ContentTypes;
+use HuaweiFrsSdk\Access\HttpRequest\HttpMethods;
+use HuaweiFrsSdk\Access\HttpRequest\UnSignedRequest;
+use HuaweiFrsSdk\Access\Signer\Signer;
 use HuaweiFrsSdk\Client\Param\AuthInfo;
+use Psr\Http\Message\ResponseInterface;
 
 class FrsAccess
 {
@@ -18,11 +24,7 @@ class FrsAccess
      */
     private $authInfo;
     /**
-     * @var int
-     */
-    private $connectionTimeout;
-    /**
-     * @var CurlClient
+     * @var GuzzleClient
      */
     private $httpClient;
     /**
@@ -39,10 +41,10 @@ class FrsAccess
     public function __construct( AuthInfo $authInfo, int $connectionTimeout )
     {
         $this->authInfo = $authInfo;
-        $this->connectionTimeout = $connectionTimeout;
 
         $this->signer = new Signer($authInfo->getAk(), $authInfo->getSk());
-        $this->httpClient = new CurlClient($connectionTimeout);
+
+        $this->httpClient = new GuzzleClient($connectionTimeout);
     }
 
     /**
@@ -50,11 +52,9 @@ class FrsAccess
      * @param array  $body
      * @param string $contentType
      *
-     * @return HttpResponse
-     * @throws \HuaweiFrsSdk\Common\FrsClientException
-     * @throws \HuaweiFrsSdk\Common\FrsServerException
+     * @return ResponseInterface
      */
-    public function post( string $uri,array $body , string $contentType = UnsignedHttpRequest::CONTENT_TYPE_JSON) : HttpResponse
+    public function post( string $uri,array $body , string $contentType = ContentTypes::JSON): ResponseInterface
     {
         $unsignedRequest = $this->createUnsignedRequest($uri,$body,$contentType);
 
@@ -68,17 +68,21 @@ class FrsAccess
      * @param array  $body
      * @param string $contentType
      *
-     * @return UnsignedHttpRequest
+     * @return UnSignedRequest
      */
-    private function createUnsignedRequest( string $uri, array $body , string $contentType) : UnsignedHttpRequest
+    private function createUnsignedRequest( string $uri, array $body , string $contentType) : UnSignedRequest
     {
-        $unsignedRequest = new UnsignedHttpRequest();
-        $unsignedRequest->setMethod(UnsignedHttpRequest::METHOD_POST);
-        $unsignedRequest->setScheme(UnsignedHttpRequest::SCHEME_HTTPS);
-        $unsignedRequest->setHost($this->authInfo->getEndpoint());
-        $unsignedRequest->setUri($uri);
-        $unsignedRequest->setContentType($contentType);
-        $unsignedRequest->setBody(json_encode($body));
+        $scheme = parse_url($this->authInfo->getEndpoint(),PHP_URL_SCHEME);
+        $host = parse_url($this->authInfo->getEndpoint(),PHP_URL_HOST);
+
+        $requestUri = $scheme . '://' . $host . $uri;
+
+        $unsignedRequest = new UnSignedRequest(
+            HttpMethods::POST,
+            new Uri($requestUri),
+            ['content-type' => $contentType],
+            \GuzzleHttp\json_encode($body)
+        );
 
         return $unsignedRequest;
     }

@@ -8,7 +8,7 @@
 namespace HuaweiFrsSdk\Common;
 
 
-class FrsUris
+class FrsPaths
 {
-    const FACE_SEARCH_URI = '/v1/%s/face-sets/%s/search';
+    public const FACE_SEARCH = '/v1/%s/face-sets/%s/search';
 }
