@@ -54,6 +54,12 @@ class GuzzleClient
                     'body'  => $r->getBody(),
                     'http_error' => true,
                 ]);
+            case HttpMethods::PUT:
+                return $client->put($r->getUri(),[
+                    'headers' => $r->getHeaders(),
+                    'body'  => $r->getBody(),
+                    'http_error' => true,
+                ]);
             default:
                 throw new InvalidArgumentException(
                     "Invalid Http Method. http method should be one of get/post/put/delete/head , {$method} given.");

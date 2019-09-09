@@ -23,6 +23,7 @@
         <env name="HUAWEI_FRS_FACE_SET_NAME" value="xxx"/>
         <env name="HUAWEI_FRS_TEMP_FACE_SET_NAME" value="xxx"/>
         <env name="HUAWEI_FRS_SEARCH_FACE_ID" value="xxx"/>
+        <env name="HUAWEI_FRS_EXTERNAL_IMAGE_ID" value="xxx"/>
     </php>
 
 </phpunit>

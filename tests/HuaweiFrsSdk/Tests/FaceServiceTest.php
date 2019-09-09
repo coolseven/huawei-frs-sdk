@@ -38,6 +38,10 @@ class FaceServiceTest extends PHPUnit_Framework_TestCase
      * @var string
      */
     private $faceId;
+    /**
+     * @var string
+     */
+    private $externalImageId;
 
     public function setUp()
     {
@@ -52,6 +56,7 @@ class FaceServiceTest extends PHPUnit_Framework_TestCase
         $this->projectId = getenv('HUAWEI_FRS_PROJECT_ID');
         $this->faceSetName = getenv('HUAWEI_FRS_FACE_SET_NAME');
         $this->faceId = getenv('HUAWEI_FRS_SEARCH_FACE_ID');
+        $this->externalImageId = getenv('HUAWEI_FRS_EXTERNAL_IMAGE_ID');
     }
 
     public function testGetFaces(): void
@@ -132,6 +137,67 @@ class FaceServiceTest extends PHPUnit_Framework_TestCase
         //        }
         //    ]
         //}
+        echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
+
+        $this->assertEquals(200,$response->getStatusCode());
+    }
+
+    public function testAddFaceByBase64() : void
+    {
+        $frsClient = new FrsClient($this->authInfo,$this->projectId);
+
+        $imageFilePath = __DIR__.'/images/donald_trump.jpeg';
+
+        $imageBase64 = base64_encode(file_get_contents($imageFilePath));
+
+        $externalImageId = md5(file_get_contents($imageFilePath));
+
+        $response = $frsClient->getFaceService()->addFaceByBase64($this->faceSetName,$imageBase64,$externalImageId);
+
+        echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
+
+        $this->assertEquals(200,$response->getStatusCode());
+    }
+
+    public function updateFaceByFaceId() : void
+    {
+        $frsClient = new FrsClient($this->authInfo,$this->projectId);
+
+        $response = $frsClient->getFaceService()->updateFaceByFaceId($this->faceSetName,$this->faceId,$this->externalImageId);
+
+        echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
+
+        $this->assertEquals(200,$response->getStatusCode());
+    }
+
+    public function testDeleteFaceByFaceId() : void
+    {
+        $frsClient = new FrsClient($this->authInfo,$this->projectId);
+
+        $response = $frsClient->getFaceService()->deleteFaceByFaceId($this->faceSetName,$this->faceId);
+
+        echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
+
+        $this->assertEquals(200,$response->getStatusCode());
+    }
+
+    public function testDeleteFaceByExternalImageId() : void
+    {
+        $frsClient = new FrsClient($this->authInfo,$this->projectId);
+
+        $response = $frsClient->getFaceService()->deleteFaceByExternalImageId($this->faceSetName,$this->externalImageId);
+
+        echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
+
+        $this->assertEquals(200,$response->getStatusCode());
+    }
+
+    public function testBatchDeleteFaces() : void
+    {
+        $frsClient = new FrsClient($this->authInfo,$this->projectId);
+
+        $response = $frsClient->getFaceService()->batchDeleteFacesByFilter($this->faceSetName,'age:[20 TO 30]');
+
         echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());

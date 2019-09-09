@@ -76,6 +76,15 @@ class FrsAccess
         return $this->httpClient->access($signedRequest);
     }
 
+    public function put( string $uri, array $body = [] , string $contentType = ContentTypes::JSON)
+    {
+        $unsignedRequest = $this->createUnsignedRequest(HttpMethods::PUT,$uri,$body,$contentType);
+
+        $signedRequest = $this->signer->sign($unsignedRequest);
+
+        return $this->httpClient->access($signedRequest);
+    }
+
     /**
      * @param string     $method
      * @param string     $uri

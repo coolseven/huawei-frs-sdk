@@ -43,5 +43,30 @@ class FrsPaths
     /**
      * POST '/v1/{project_id}/face-sets/{face_set_name}/faces'
      */
-    public const FACE_ADD     = '/v1/%s/face-sets/%s/faces';
+    public const FACE_ADD    = '/v1/%s/face-sets/%s/faces';
+
+    /**
+     * PUT '/v1/{project_id}/face-sets/{face_set_name}/faces'
+     */
+    public const FACE_UPDATE            = '/v1/%s/face-sets/%s/faces';
+
+    /**
+     * DELETE '/v1/{project_id}/face-sets/{face_set_name}/faces?face_id={face_id}'
+     */
+    public const FACE_DELETE_BY_FACE_ID = '/v1/%s/face-sets/%s/faces?face_id=%s';
+
+    /**
+     * DELETE '/v1/{project_id}/face-sets/{face_set_name}/faces?external_image_id={external_image_id}'
+     */
+    public const FACE_DELETE_BY_EXTERNAL_IMAGE_ID = '/v1/%s/face-sets/%s/faces?external_image_id=%s';
+
+    /**
+     * DELETE '/v1/{project_id}/face-sets/{face_set_name}/faces?{external_field_key}={external_filed_value}'
+     */
+    public const FACE_DELETE_BY_EXTERNAL_FIELD = '/v1/%s/face-sets/%s/faces?%s=%s';
+
+    /**
+     * DELETE '/v1/{project_id}/face-sets/{face_set_name}/faces/batch'
+     */
+    public const FACE_BATCH_DELETE_BY_FILTER = '/v1/%s/face-sets/%s/faces/batch';
 }
