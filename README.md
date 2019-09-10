@@ -9,7 +9,7 @@ Important: This IS **NOT** AN OFFICIAL SDK. Use It At Your Own Risk.
 # How to use
 - Install Sdk
 ```bash
-composer require coolseven/huaweicloud-sdk-php-frs
+composer require coolseven/huawei-frs-sdk
 ```
 
 - Run Tests ( Optional ) 
@@ -40,6 +40,8 @@ composer require coolseven/huaweicloud-sdk-php-frs
     // get face set list
     $response = $frsClient->getFaceSetService()->getAllFaceSets();
 ```
+
+More usage demos can be found at `tests`
 
 - Services & Api Cheat Sheet
   - CompareService
@@ -75,7 +77,6 @@ composer require coolseven/huaweicloud-sdk-php-frs
     - searchFaceByFaceId
     - searchFaceByObsUrl
 
-More usage demos can be found at `tests`
 
 
 
