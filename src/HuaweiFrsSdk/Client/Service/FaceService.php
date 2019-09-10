@@ -73,9 +73,30 @@ class FaceService
         string $localFilePath,
         string $externalImageId = '',
         ExternalFields $externalFields = null
-    )
+    ): ResponseInterface
     {
-        // TODO
+        $uri = sprintf(FrsPaths::FACE_ADD, $this->projectId, $faceSetName);
+
+        if (!empty($externalImageId)) {
+            $body['multipart'][] = [
+               'name' => 'external_image_id',
+               'contents' => $externalImageId,
+            ];
+        }
+
+        if ($externalFields !== null) {
+            $body['multipart'][] = [
+                'name' => 'external_fields',
+                'contents' => \GuzzleHttp\json_encode($externalFields->getExternalFields()),
+            ];
+        }
+
+        $body['multipart'][] = [
+            'name'     => 'image_file',
+            'contents' => fopen($localFilePath, 'rb'),
+        ];
+
+        return $this->accessService->postMultipartFormData($uri,$body);
     }
 
     public function updateFaceByFaceId(

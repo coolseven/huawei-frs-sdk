@@ -178,6 +178,51 @@ class FaceServiceTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(200,$response->getStatusCode());
     }
 
+    public function testAddFaceByLocalFile(): void
+    {
+        $frsClient = new FrsClient($this->authInfo,$this->projectId);
+
+        $imageFilePath = __DIR__.'/images/donald_trump.jpeg';
+
+        $externalImageId = md5(file_get_contents($imageFilePath));
+
+        $response = $frsClient->getFaceService()->addFaceByLocalFile(
+            $this->faceSetName,
+            $imageFilePath,
+            $externalImageId,
+            new ExternalFields([
+                new ExternalField('number',90),
+                new ExternalField('id','id_01'),
+                new ExternalField('timestamp',123456),
+            ])
+        );
+
+        // {
+        //    "face_set_id": "ER4HtVIY",
+        //    "face_set_name": "faceset_test",
+        //    "faces": [
+        //        {
+        //            "face_id": "tv9Mn01C",
+        //            "external_image_id": "972c5c973b3ca00e169d916eec55c121",
+        //            "bounding_box": {
+        //                "width": 225,
+        //                "top_left_x": 153,
+        //                "top_left_y": 163,
+        //                "height": 225
+        //            },
+        //            "external_fields": {
+        //                "number": 90,
+        //                "id": "id_01",
+        //                "timestamp": 123456
+        //            }
+        //        }
+        //    ]
+        //}
+        echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
+
+        $this->assertEquals(200,$response->getStatusCode());
+    }
+
     public function testUpdateFaceByFaceId() : void
     {
         $frsClient = new FrsClient($this->authInfo,$this->projectId);

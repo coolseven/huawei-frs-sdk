@@ -62,7 +62,32 @@ class SearchServiceTest extends PHPUnit_Framework_TestCase
 
         $response = $frsClient->getSearchService()->searchFaceByBase64($this->faceSetName,$imageBase64,100);
 
-        // {"faces":[]}
+        // {
+        //    "faces": [
+        //        {
+        //            "face_id": "XtCxmEgM",
+        //            "external_image_id": "972c5c973b3ca00e169d916eec55c121",
+        //            "bounding_box": {
+        //                "width": 225,
+        //                "top_left_x": 153,
+        //                "top_left_y": 163,
+        //                "height": 225
+        //            },
+        //            "similarity": 1
+        //        },
+        //        {
+        //            "face_id": "iIOUoqKm",
+        //            "external_image_id": "972c5c973b3ca00e169d916eec55c121",
+        //            "bounding_box": {
+        //                "width": 225,
+        //                "top_left_x": 153,
+        //                "top_left_y": 163,
+        //                "height": 225
+        //            },
+        //            "similarity": 1
+        //        }
+        //    ]
+        //}
         echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
