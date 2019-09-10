@@ -64,10 +64,28 @@ class LiveDetectService
     /**
      * @param string  $videoLocalFilePath
      * @param Actions $videoLiveDetectActions
+     *
+     * @return ResponseInterface
      */
-    public function liveDetectByLocalFile( string $videoLocalFilePath, Actions $videoLiveDetectActions ): void
+    public function liveDetectByLocalFile( string $videoLocalFilePath, Actions $videoLiveDetectActions ): ResponseInterface
     {
-        // TODO
+        $uri = sprintf(FrsPaths::LIVE_DETECT, $this->projectId);
+
+        $body = [];
+
+        if (!empty($videoLiveDetectActions->getActionTime())) {
+            $body['multipart'][] = [
+                'name' => 'action_time',
+                'contents' => $videoLiveDetectActions->getActionTime(),
+            ];
+        }
+
+        $body['multipart'][] = [
+            'name'     => 'video_file',
+            'contents' => fopen($videoLocalFilePath, 'rb'),
+        ];
+
+        return $this->accessService->post($uri,$body);
     }
 
     /**
