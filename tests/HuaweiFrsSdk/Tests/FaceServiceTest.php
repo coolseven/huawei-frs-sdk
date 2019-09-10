@@ -5,6 +5,8 @@ namespace HuaweiFrsSdk\Tests;
 
 use HuaweiFrsSdk\Client\Param\AuthInfo;
 use HuaweiFrsSdk\Client\FrsClient;
+use HuaweiFrsSdk\Client\Param\ExternalField;
+use HuaweiFrsSdk\Client\Param\ExternalFields;
 use PHPUnit_Framework_TestCase;
 
 class FaceServiceTest extends PHPUnit_Framework_TestCase
@@ -114,7 +116,7 @@ class FaceServiceTest extends PHPUnit_Framework_TestCase
     {
         $frsClient = new FrsClient($this->authInfo,$this->projectId);
 
-        $response = $frsClient->getFaceService()->getFace($this->faceSetName,'RG16TGCu');
+        $response = $frsClient->getFaceService()->getFace($this->faceSetName,$this->faceId);
 
         // {
         //    "face_set_id": "ER4HtVIY",
@@ -154,17 +156,48 @@ class FaceServiceTest extends PHPUnit_Framework_TestCase
 
         $response = $frsClient->getFaceService()->addFaceByBase64($this->faceSetName,$imageBase64,$externalImageId);
 
+        // {
+        //    "face_set_id": "ER4HtVIY",
+        //    "face_set_name": "faceset_test",
+        //    "faces": [
+        //        {
+        //            "face_id": "6OvUvI9k",
+        //            "external_image_id": "972c5c973b3ca00e169d916eec55c121",
+        //            "bounding_box": {
+        //                "width": 225,
+        //                "top_left_x": 153,
+        //                "top_left_y": 163,
+        //                "height": 225
+        //            },
+        //            "external_fields": {}
+        //        }
+        //    ]
+        //}
         echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
     }
 
-    public function updateFaceByFaceId() : void
+    public function testUpdateFaceByFaceId() : void
     {
         $frsClient = new FrsClient($this->authInfo,$this->projectId);
 
-        $response = $frsClient->getFaceService()->updateFaceByFaceId($this->faceSetName,$this->faceId,$this->externalImageId);
+        $response = $frsClient->getFaceService()->updateFaceByFaceId(
+            $this->faceSetName,
+            $this->faceId,
+            $this->externalImageId,
+            new ExternalFields([
+                new ExternalField('number',90),
+                new ExternalField('id','id_01'),
+                new ExternalField('timestamp',123456),
+            ])
+        );
 
+        // {
+        //    "face_number": 1,
+        //    "face_set_name": "faceset_test",
+        //    "face_set_id": "ER4HtVIY"
+        //}
         echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
@@ -176,6 +209,11 @@ class FaceServiceTest extends PHPUnit_Framework_TestCase
 
         $response = $frsClient->getFaceService()->deleteFaceByFaceId($this->faceSetName,$this->faceId);
 
+        // {
+        //    "face_number": 1,
+        //    "face_set_name": "faceset_test",
+        //    "face_set_id": "ER4HtVIY"
+        //}
         echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
@@ -187,6 +225,11 @@ class FaceServiceTest extends PHPUnit_Framework_TestCase
 
         $response = $frsClient->getFaceService()->deleteFaceByExternalImageId($this->faceSetName,$this->externalImageId);
 
+        // {
+        //    "face_number": 1,
+        //    "face_set_name": "faceset_test",
+        //    "face_set_id": "ER4HtVIY"
+        //}
         echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
@@ -196,8 +239,13 @@ class FaceServiceTest extends PHPUnit_Framework_TestCase
     {
         $frsClient = new FrsClient($this->authInfo,$this->projectId);
 
-        $response = $frsClient->getFaceService()->batchDeleteFacesByFilter($this->faceSetName,'age:[20 TO 30]');
+        $response = $frsClient->getFaceService()->batchDeleteFacesByFilter($this->faceSetName,'number:[89 TO 91]');
 
+        // {
+        //    "face_number": 1,
+        //    "face_set_name": "faceset_test",
+        //    "face_set_id": "ER4HtVIY"
+        //}
         echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
