@@ -57,10 +57,23 @@ class CompareService
     /**
      * @param string $image1LocalFilePath
      * @param string $image2LocalFilePath
+     *
+     * @return ResponseInterface
      */
-    public function compareFaceByLocalFile( string $image1LocalFilePath, string $image2LocalFilePath ): void
+    public function compareFaceByLocalFile( string $image1LocalFilePath, string $image2LocalFilePath ): ResponseInterface
     {
-        // TODO
+        $uri = sprintf(FrsPaths::FACE_COMPARE, $this->projectId);
+
+        $body['multipart'][] = [
+            'name'     => 'image1_file',
+            'contents' => fopen($image1LocalFilePath, 'rb'),
+        ];
+        $body['multipart'][] = [
+            'name'     => 'image2_file',
+            'contents' => fopen($image2LocalFilePath, 'rb'),
+        ];
+
+        return $this->accessService->postMultipartFormData($uri,$body);
     }
 
     /**
