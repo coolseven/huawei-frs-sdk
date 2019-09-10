@@ -58,10 +58,28 @@ class DetectService
     /**
      * @param string                  $localFilePath
      * @param FaceDetectionAttributes $detectionAttributes
+     *
+     * @return ResponseInterface
      */
-    public function detectFaceByLocalFile( string $localFilePath, FaceDetectionAttributes $detectionAttributes ): void
+    public function detectFaceByLocalFile( string $localFilePath, FaceDetectionAttributes $detectionAttributes ): ResponseInterface
     {
-        // TODO
+        $uri = sprintf(FrsPaths::FACE_DETECT, $this->projectId);
+
+        $body = [];
+
+        if (!empty($detectionAttributes->getWantedAttributes())) {
+            $body['multipart'][] = [
+                'name' => 'attributes',
+                'contents' => $detectionAttributes->getWantedAttributes(),
+            ];
+        }
+
+        $body['multipart'][] = [
+            'name'     => 'image_file',
+            'contents' => fopen($localFilePath, 'rb'),
+        ];
+
+        return $this->accessService->post($uri,$body);
     }
 
     /**
