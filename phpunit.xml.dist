@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="./tests/bootstrap.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+>
+    <testsuites>
+        <testsuite name="Huawei Frs SDK Tests">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <env name="HUAWEI_FRS_AK" value="xxx"/>
+        <env name="HUAWEI_FRS_SK" value="xxx"/>
+        <env name="HUAWEI_FRS_ENDPOINT" value="xxx"/>
+        <env name="HUAWEI_FRS_PROJECT_ID" value="xxx"/>
+        <env name="HUAWEI_FRS_FACE_SET_NAME" value="xxx"/>
+        <env name="HUAWEI_FRS_TEMP_FACE_SET_NAME" value="xxx"/>
+        <env name="HUAWEI_FRS_SEARCH_FACE_ID" value="xxx"/>
+        <env name="HUAWEI_FRS_EXTERNAL_IMAGE_ID" value="xxx"/>
+    </php>
+
+</phpunit>
