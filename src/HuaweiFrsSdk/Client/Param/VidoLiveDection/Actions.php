@@ -38,7 +38,7 @@ class Actions
         $this->mouthAction = $mouthAction;
     }
 
-    public function getActions()
+    public function getActions(): string
     {
         $actions = [];
 
@@ -58,7 +58,7 @@ class Actions
         return implode(',',$actions);
     }
 
-    public function getActionTime()
+    public function getActionTime(): string
     {
         $action_time = [];
 

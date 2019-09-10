@@ -7,6 +7,7 @@ use HuaweiFrsSdk\Access\FrsAccess;
 use HuaweiFrsSdk\Common\FrsPaths;
 use HuaweiFrsSdk\Common\ImageTypes;
 use InvalidArgumentException;
+use Psr\Http\Message\ResponseInterface;
 
 class CompareService
 {
@@ -31,22 +32,45 @@ class CompareService
         $this->projectId = $projectId;
     }
 
-    public function compareFaceByBase64( string $image1Base64, string $image2Base64 )
+    /**
+     * @param string $image1Base64
+     * @param string $image2Base64
+     *
+     * @return ResponseInterface
+     */
+    public function compareFaceByBase64( string $image1Base64, string $image2Base64 ): ResponseInterface
     {
         return $this->compareFace(ImageTypes::BASE64, $image1Base64, $image2Base64);
     }
 
-    public function compareFaceByObsUrl( string $image1ObsUrl, string $image2ObsUrl )
+    /**
+     * @param string $image1ObsUrl
+     * @param string $image2ObsUrl
+     *
+     * @return ResponseInterface
+     */
+    public function compareFaceByObsUrl( string $image1ObsUrl, string $image2ObsUrl ): ResponseInterface
     {
         return $this->compareFace(ImageTypes::OBS_URL, $image1ObsUrl, $image2ObsUrl);
     }
 
-    public function compareFaceByLocalFile( string $image1LocalFilePath, string $image2LocalFilePath )
+    /**
+     * @param string $image1LocalFilePath
+     * @param string $image2LocalFilePath
+     */
+    public function compareFaceByLocalFile( string $image1LocalFilePath, string $image2LocalFilePath ): void
     {
         // TODO
     }
 
-    private function compareFace( string $imageType, string $image1, string $image2 )
+    /**
+     * @param string $imageType
+     * @param string $image1
+     * @param string $image2
+     *
+     * @return ResponseInterface
+     */
+    private function compareFace( string $imageType, string $image1, string $image2 ): ResponseInterface
     {
         $uri = sprintf(FrsPaths::FACE_COMPARE, $this->projectId);
 

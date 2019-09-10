@@ -9,7 +9,13 @@ use HuaweiFrsSdk\Client\Param\VideoLiveDetection\Actions;
 use HuaweiFrsSdk\Common\FrsPaths;
 use HuaweiFrsSdk\Common\VideoTypes;
 use InvalidArgumentException;
+use Psr\Http\Message\ResponseInterface;
 
+/**
+ * Class LiveDetectService
+ *
+ * @package HuaweiFrsSdk\Client\Service
+ */
 class LiveDetectService
 {
     /**
@@ -33,22 +39,45 @@ class LiveDetectService
         $this->projectId = $projectId;
     }
 
-    public function liveDetectByBase64( string $videoBase64, Actions $videoLiveDetectActions )
+    /**
+     * @param string  $videoBase64
+     * @param Actions $videoLiveDetectActions
+     *
+     * @return ResponseInterface
+     */
+    public function liveDetectByBase64( string $videoBase64, Actions $videoLiveDetectActions ): ResponseInterface
     {
         return $this->liveDetect(VideoTypes::BASE64,$videoBase64,$videoLiveDetectActions);
     }
 
-    public function liveDetectByObsUrl( string $videoUrl, Actions $videoLiveDetectActions )
+    /**
+     * @param string  $videoUrl
+     * @param Actions $videoLiveDetectActions
+     *
+     * @return ResponseInterface
+     */
+    public function liveDetectByObsUrl( string $videoUrl, Actions $videoLiveDetectActions ): ResponseInterface
     {
         return $this->liveDetect(VideoTypes::OBS_URL,$videoUrl,$videoLiveDetectActions);
     }
 
-    public function liveDetectByLocalFile( string $videoLocalFilePath, Actions $videoLiveDetectActions )
+    /**
+     * @param string  $videoLocalFilePath
+     * @param Actions $videoLiveDetectActions
+     */
+    public function liveDetectByLocalFile( string $videoLocalFilePath, Actions $videoLiveDetectActions ): void
     {
         // TODO
     }
 
-    private function liveDetect( string $videoType, string $video, Actions $videoLiveDetectActions )
+    /**
+     * @param string  $videoType
+     * @param string  $video
+     * @param Actions $videoLiveDetectActions
+     *
+     * @return ResponseInterface
+     */
+    private function liveDetect( string $videoType, string $video, Actions $videoLiveDetectActions ): ResponseInterface
     {
         $uri = sprintf(FrsPaths::LIVE_DETECT, $this->projectId);
 

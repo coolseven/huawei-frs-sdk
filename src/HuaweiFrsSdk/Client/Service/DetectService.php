@@ -8,6 +8,7 @@ use HuaweiFrsSdk\Client\Param\FaceDetectionAttributes;
 use HuaweiFrsSdk\Common\FrsPaths;
 use HuaweiFrsSdk\Common\ImageTypes;
 use InvalidArgumentException;
+use Psr\Http\Message\ResponseInterface;
 
 class DetectService
 {
@@ -32,22 +33,45 @@ class DetectService
         $this->projectId = $projectId;
     }
 
-    public function detectFaceByBas464( string $imageBas464 , FaceDetectionAttributes $detectionAttributes)
+    /**
+     * @param string                  $imageBas464
+     * @param FaceDetectionAttributes $detectionAttributes
+     *
+     * @return ResponseInterface
+     */
+    public function detectFaceByBas464( string $imageBas464 , FaceDetectionAttributes $detectionAttributes): ResponseInterface
     {
         return $this->detectFace(ImageTypes::BASE64,$imageBas464,$detectionAttributes);
     }
 
-    public function detectFaceByObsUrl( string $imageObsUrl, FaceDetectionAttributes $detectionAttributes)
+    /**
+     * @param string                  $imageObsUrl
+     * @param FaceDetectionAttributes $detectionAttributes
+     *
+     * @return ResponseInterface
+     */
+    public function detectFaceByObsUrl( string $imageObsUrl, FaceDetectionAttributes $detectionAttributes): ResponseInterface
     {
         return $this->detectFace(ImageTypes::OBS_URL,$imageObsUrl,$detectionAttributes);
     }
 
-    public function detectFaceByLocalFile( string $localFilePath, FaceDetectionAttributes $detectionAttributes )
+    /**
+     * @param string                  $localFilePath
+     * @param FaceDetectionAttributes $detectionAttributes
+     */
+    public function detectFaceByLocalFile( string $localFilePath, FaceDetectionAttributes $detectionAttributes ): void
     {
         // TODO
     }
 
-    private function detectFace( string $imageType, string $image, FaceDetectionAttributes $detectionAttributes )
+    /**
+     * @param string                  $imageType
+     * @param string                  $image
+     * @param FaceDetectionAttributes $detectionAttributes
+     *
+     * @return ResponseInterface
+     */
+    private function detectFace( string $imageType, string $image, FaceDetectionAttributes $detectionAttributes ): ResponseInterface
     {
         $uri = sprintf(FrsPaths::FACE_DETECT, $this->projectId);
 

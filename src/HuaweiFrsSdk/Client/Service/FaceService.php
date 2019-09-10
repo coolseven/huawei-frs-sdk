@@ -120,7 +120,7 @@ class FaceService
         return $this->accessService->delete($uri);
     }
 
-    public function batchDeleteFacesByFilter( string $faceSetName, string $filter )
+    public function batchDeleteFacesByFilter( string $faceSetName, string $filter ): ResponseInterface
     {
         $uri = sprintf(FrsPaths::FACE_BATCH_DELETE_BY_FILTER, $this->projectId, $faceSetName );
 
@@ -135,7 +135,7 @@ class FaceService
         string $image,
         string $externalImageId = '',
         ExternalFields $externalFields = null
-    )
+    ): ResponseInterface
     {
         $uri = sprintf(FrsPaths::FACE_ADD, $this->projectId, $faceSetName);
 

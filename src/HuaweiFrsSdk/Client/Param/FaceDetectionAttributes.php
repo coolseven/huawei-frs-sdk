@@ -51,7 +51,7 @@ class FaceDetectionAttributes
     /**
      * @return string
      */
-    public function getWantedAttributes()
+    public function getWantedAttributes(): string
     {
         $wanted = [];
 
