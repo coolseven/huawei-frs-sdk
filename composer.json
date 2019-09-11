@@ -11,6 +11,9 @@
             "email": "cooleven2013@gmail.com"
         }
     ],
+    "scripts": {
+        "test": "phpunit"
+    },
     "require": {
         "php": ">=7.2",
         "guzzlehttp/guzzle": "^6.3"
