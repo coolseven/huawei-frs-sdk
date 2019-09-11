@@ -1,5 +1,8 @@
 # Changelog
 
+## 2019-09-11 v1.1.0
+add unit tests for face compare services
+
 ## 2019-09-10 v1.0.0
 released first version.
 
