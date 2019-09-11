@@ -12,24 +12,6 @@ Important: This IS **NOT** AN OFFICIAL SDK. Use It At Your Own Risk.
 composer require coolseven/huawei-frs-sdk
 ```
 
-- Run Tests ( Optional ) 
-
-  - copy `phpunit.xml.dist` to `phpunit.xml`
-
-    ```bash
-    cp phpunit.xml.dist phpunit.xml
-    ```
-
-  - set variable values in phpunit.xml accoording to your own huawei account
-
-  - run test
-
-    ```bash
-    vender\bin\phpunit
-    ```
-
-    
-
 - Use Sdk
 ```php
     // $endpoint , $ak,$sk can be found at Huawei's console panel
@@ -86,8 +68,9 @@ More usage demos can be found at `tests`
 - [x] Add unit tests for FaceService
 - [x] Add unit tests for SearchService
 - [ ] Add unit tests for DetectService
-- [ ] Add unit tests for CompareService
+- [x] Add unit tests for CompareService
 - [ ] Add unit tests for LiveDetectService
+- [ ] Add parameter validation
 
 
 

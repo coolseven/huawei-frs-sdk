@@ -48,8 +48,6 @@ class FaceSetServiceTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        require_once __DIR__.'/../../bootstrap.php';
-
         $this->ak = getenv('HUAWEI_FRS_AK') ;
         $this->sk = getenv('HUAWEI_FRS_SK') ;
         $this->endpoint = getenv('HUAWEI_FRS_ENDPOINT') ;
