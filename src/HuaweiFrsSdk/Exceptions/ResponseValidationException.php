@@ -5,9 +5,10 @@ namespace HuaweiFrsSdk\Exceptions;
 
 
 
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 
-class ResponseValidationException extends \Exception
+class ResponseValidationException extends Exception
 {
     /**
      * @var ResponseInterface
@@ -16,7 +17,7 @@ class ResponseValidationException extends \Exception
 
     public function __construct(ResponseInterface $originalResponse, $message)
     {
-        parent::__construct($message);
+        parent::__construct($message . ' ,response body: '. $originalResponse->getBody()->getContents());
 
         $this->originalResponse = $originalResponse;
     }
