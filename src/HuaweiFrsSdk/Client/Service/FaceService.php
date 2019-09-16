@@ -5,6 +5,7 @@ namespace HuaweiFrsSdk\Client\Service;
 
 
 use HuaweiFrsSdk\Access\FrsAccess;
+use HuaweiFrsSdk\Access\HttpResponse\Face\AddFaceResponse;
 use HuaweiFrsSdk\Client\Param\ExternalFields;
 use HuaweiFrsSdk\Common\FrsPaths;
 use HuaweiFrsSdk\Common\ImageTypes;
@@ -53,7 +54,7 @@ class FaceService
         string $imageBase64,
         string $externalImageId = '',
         ExternalFields $externalFields = null
-    ) : ResponseInterface
+    ) : AddFaceResponse
     {
         return $this->addFace($faceSetName,ImageTypes::BASE64,$imageBase64,$externalImageId,$externalFields);
     }
@@ -63,7 +64,7 @@ class FaceService
         string $imageObsUrl,
         string $externalImageId = '',
         ExternalFields $externalFields = null
-    ) : ResponseInterface
+    ) : AddFaceResponse
     {
         return $this->addFace($faceSetName,ImageTypes::OBS_URL,$imageObsUrl,$externalImageId,$externalFields);
     }
@@ -73,7 +74,7 @@ class FaceService
         string $localFilePath,
         string $externalImageId = '',
         ExternalFields $externalFields = null
-    ): ResponseInterface
+    ): AddFaceResponse
     {
         $uri = sprintf(FrsPaths::FACE_ADD, $this->projectId, $faceSetName);
 
@@ -96,7 +97,9 @@ class FaceService
             'contents' => fopen($localFilePath, 'rb'),
         ];
 
-        return $this->accessService->postMultipartFormData($uri,$body);
+        $response = $this->accessService->postMultipartFormData($uri,$body);
+
+        return new AddFaceResponse($response);
     }
 
     public function updateFaceByFaceId(
@@ -156,7 +159,7 @@ class FaceService
         string $image,
         string $externalImageId = '',
         ExternalFields $externalFields = null
-    ): ResponseInterface
+    ): AddFaceResponse
     {
         $uri = sprintf(FrsPaths::FACE_ADD, $this->projectId, $faceSetName);
 
@@ -181,6 +184,8 @@ class FaceService
             $body['external_fields'] = $externalFields->getExternalFields();
         }
 
-        return $this->accessService->post($uri,$body);
+        $response = $this->accessService->post($uri,$body);
+
+        return new AddFaceResponse($response);
     }
 }

@@ -174,6 +174,8 @@ class FaceServiceTest extends PHPUnit_Framework_TestCase
         echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
+        $this->assertEquals($this->faceSetName,$response->getResult()->getFaceSetName());
+        $this->assertEquals($externalImageId,( $response->getResult()->getFaces()[0])->getExternalImageId());
     }
 
     public function testAddFaceByLocalFile(): void
@@ -219,6 +221,8 @@ class FaceServiceTest extends PHPUnit_Framework_TestCase
         echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
+        $this->assertEquals($this->faceSetName,$response->getResult()->getFaceSetName());
+        $this->assertEquals($externalImageId,( $response->getResult()->getFaces()[0])->getExternalImageId());
     }
 
     public function testUpdateFaceByFaceId() : void

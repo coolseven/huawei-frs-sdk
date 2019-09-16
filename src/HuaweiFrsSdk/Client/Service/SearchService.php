@@ -4,12 +4,12 @@ namespace HuaweiFrsSdk\Client\Service;
 
 
 use HuaweiFrsSdk\Access\FrsAccess;
+use HuaweiFrsSdk\Access\HttpResponse\Search\SearchFaceResponse;
 use HuaweiFrsSdk\Client\Param\SearchReturnFields;
 use HuaweiFrsSdk\Client\Param\SearchSort;
 use HuaweiFrsSdk\Common\FrsPaths;
 use HuaweiFrsSdk\Common\ImageTypes;
 use InvalidArgumentException;
-use Psr\Http\Message\ResponseInterface;
 
 class SearchService
 {
@@ -43,7 +43,7 @@ class SearchService
      * @param SearchReturnFields|null $searchReturnFields
      * @param string|null             $filter
      *
-     * @return ResponseInterface
+     * @return SearchFaceResponse
      */
     public function searchFaceByBase64(
         string $faceSetName,
@@ -53,7 +53,7 @@ class SearchService
         SearchSort $searchSort = null,
         SearchReturnFields $searchReturnFields = null,
         string $filter = null
-    ): ResponseInterface
+    ): SearchFaceResponse
     {
         return $this->searchFace($faceSetName,ImageTypes::BASE64,$imageBase64,$topN,$threshold,$searchSort,$searchReturnFields,$filter);
     }
@@ -67,7 +67,7 @@ class SearchService
      * @param SearchReturnFields|null $searchReturnFields
      * @param string|null             $filter
      *
-     * @return ResponseInterface
+     * @return SearchFaceResponse
      */
     public function searchFaceByFaceId(
         string $faceSetName,
@@ -77,7 +77,7 @@ class SearchService
         SearchSort $searchSort = null,
         SearchReturnFields $searchReturnFields = null,
         string $filter = null
-    ): ResponseInterface
+    ): SearchFaceResponse
     {
         return $this->searchFace($faceSetName,ImageTypes::FACE_ID,$faceId,$topN,$threshold,$searchSort,$searchReturnFields,$filter);
     }
@@ -91,7 +91,7 @@ class SearchService
      * @param SearchReturnFields|null $searchReturnFields
      * @param string|null             $filter
      *
-     * @return ResponseInterface
+     * @return SearchFaceResponse
      */
     public function searchFaceByObsUrl(
         string $faceSetName,
@@ -101,7 +101,7 @@ class SearchService
         SearchSort $searchSort = null,
         SearchReturnFields $searchReturnFields = null,
         string $filter = null
-    ): ResponseInterface
+    ): SearchFaceResponse
     {
         return $this->searchFace($faceSetName,ImageTypes::OBS_URL,$obsUrl,$topN,$threshold,$searchSort,$searchReturnFields,$filter);
     }
@@ -116,7 +116,7 @@ class SearchService
      * @param SearchReturnFields|null $searchReturnFields
      * @param string|null             $filter
      *
-     * @return ResponseInterface
+     * @return SearchFaceResponse
      */
     private function searchFace(
         string $faceSetName,
@@ -127,7 +127,7 @@ class SearchService
         SearchSort $searchSort = null,
         SearchReturnFields $searchReturnFields = null,
         string $filter = null
-    ): ResponseInterface
+    ): SearchFaceResponse
     {
         $uri = sprintf(FrsPaths::FACE_SEARCH, $this->projectId, $faceSetName);
         $body = [];
@@ -161,6 +161,8 @@ class SearchService
             $body['filter'] = $filter;
         }
 
-        return $this->accessService->post($uri,$body);
+        $response = $this->accessService->post($uri,$body);
+
+        return new SearchFaceResponse($response);
     }
 }

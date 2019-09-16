@@ -93,6 +93,7 @@ class FaceSetServiceTest extends PHPUnit_Framework_TestCase
         echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
+        $this->assertGreaterThanOrEqual(0,count($response->getResult()->getFaceSetsInfo()));
     }
 
     public function testGetFaceSet(): void
@@ -124,6 +125,7 @@ class FaceSetServiceTest extends PHPUnit_Framework_TestCase
         echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
+        $this->assertEquals($this->faceSetName,$response->getResult()->getFaceSetInfo()->getName());
     }
 
     public function testCreateFaceSet(): void
@@ -172,6 +174,8 @@ class FaceSetServiceTest extends PHPUnit_Framework_TestCase
         echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
+        $this->assertEquals($this->tempFaceSetName,$response->getResult()->getFaceSetInfo()->getName());
+        $this->assertEquals(0,$response->getResult()->getFaceSetInfo()->getNumber());
     }
 
     public function testDeleteFaceSet(): void
@@ -186,5 +190,6 @@ class FaceSetServiceTest extends PHPUnit_Framework_TestCase
         echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
+        $this->assertEquals($this->tempFaceSetName,$response->getResult()->getFaceSetName());
     }
 }

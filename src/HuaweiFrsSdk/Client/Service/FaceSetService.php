@@ -4,9 +4,12 @@ namespace HuaweiFrsSdk\Client\Service;
 
 
 use HuaweiFrsSdk\Access\FrsAccess;
+use HuaweiFrsSdk\Access\HttpResponse\FaceSet\DeleteFaceSetResponse;
+use HuaweiFrsSdk\Access\HttpResponse\FaceSet\CreateFaceSetResponse;
+use HuaweiFrsSdk\Access\HttpResponse\FaceSet\GetFaceSetResponse;
+use HuaweiFrsSdk\Access\HttpResponse\FaceSet\GetFaceSetsResponse;
 use HuaweiFrsSdk\Client\Param\ExternalFieldDefinitions;
 use HuaweiFrsSdk\Common\FrsPaths;
-use Psr\Http\Message\ResponseInterface;
 
 class FaceSetService
 {
@@ -31,25 +34,29 @@ class FaceSetService
         $this->projectId = $projectId;
     }
 
-    public function getAllFaceSets(): ResponseInterface
+    public function getAllFaceSets(): GetFaceSetsResponse
     {
         $uri = sprintf(FrsPaths::FACE_SET_GET_ALL, $this->projectId);
 
-        return $this->accessService->get($uri);
+        $response =  $this->accessService->get($uri);
+
+        return new GetFaceSetsResponse($response);
     }
 
-    public function getFaceSet(string $faceSetName): ResponseInterface
+    public function getFaceSet(string $faceSetName): GetFaceSetResponse
     {
         $uri = sprintf(FrsPaths::FACE_SET_GET_ONE, $this->projectId, $faceSetName);
 
-        return $this->accessService->get($uri);
+        $response = $this->accessService->get($uri);
+
+        return new GetFaceSetResponse($response);
     }
 
     public function createFaceSet(
         string $faceSetName,
         int $faceSetCapacity = 100000,
         ExternalFieldDefinitions $createExternalFields = null
-    ): ResponseInterface
+    ): CreateFaceSetResponse
     {
         $uri = sprintf(FrsPaths::FACE_SET_CREATE, $this->projectId);
 
@@ -59,14 +66,18 @@ class FaceSetService
             $body['external_fields'] = $createExternalFields->getExternalFields();
         }
 
-        return $this->accessService->post($uri,$body);
+        $response = $this->accessService->post($uri,$body);
+
+        return new CreateFaceSetResponse($response);
     }
 
-    public function deleteFaceSet(string $faceSetName): ResponseInterface
+    public function deleteFaceSet(string $faceSetName): DeleteFaceSetResponse
     {
         $uri = sprintf(FrsPaths::FACE_SET_DELETE, $this->projectId, $faceSetName);
 
-        return $this->accessService->delete($uri);
+        $response =  $this->accessService->delete($uri);
+
+        return new DeleteFaceSetResponse($response);
     }
 
 }

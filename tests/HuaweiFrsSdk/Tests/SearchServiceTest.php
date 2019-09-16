@@ -89,6 +89,7 @@ class SearchServiceTest extends PHPUnit_Framework_TestCase
         echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
+        $this->assertGreaterThanOrEqual(0,count($response->getResult()->getComplexFaces()));
     }
 
     public function testSearchByFaceId(): void
@@ -114,5 +115,6 @@ class SearchServiceTest extends PHPUnit_Framework_TestCase
         echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
+        $this->assertGreaterThanOrEqual(0,count($response->getResult()->getComplexFaces()));
     }
 }
