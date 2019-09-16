@@ -3,6 +3,8 @@
 namespace HuaweiFrsSdk\Client\Result\Common;
 
 
+use HuaweiFrsSdk\Client\Param\ExternalFields;
+
 class Face
 {
     /**
@@ -18,11 +20,11 @@ class Face
      */
     private $faceId;
     /**
-     * @var array
+     * @var ExternalFields
      */
     private $externalFields;
 
-    public function __construct( SimpleFace $simpleFace, string $externalImageId, string $faceId, array $externalFields = [] )
+    public function __construct( SimpleFace $simpleFace, string $externalImageId, string $faceId, ExternalFields $externalFields )
     {
 
         $this->simpleFace = $simpleFace;
@@ -82,15 +84,15 @@ class Face
     /**
      * @return array
      */
-    public function getExternalFields() : array
+    public function getExternalFields() : ExternalFields
     {
         return $this->externalFields;
     }
 
     /**
-     * @param array $externalFields
+     * @param ExternalFields $externalFields
      */
-    public function setExternalFields( array $externalFields ) : void
+    public function setExternalFields( ExternalFields $externalFields ) : void
     {
         $this->externalFields = $externalFields;
     }
