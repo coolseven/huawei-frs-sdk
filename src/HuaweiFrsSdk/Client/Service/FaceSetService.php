@@ -7,9 +7,9 @@ use HuaweiFrsSdk\Access\FrsAccess;
 use HuaweiFrsSdk\Access\HttpResponse\FaceSet\DeleteFaceSetResponse;
 use HuaweiFrsSdk\Access\HttpResponse\FaceSet\CreateFaceSetResponse;
 use HuaweiFrsSdk\Access\HttpResponse\FaceSet\GetFaceSetResponse;
+use HuaweiFrsSdk\Access\HttpResponse\FaceSet\GetFaceSetsResponse;
 use HuaweiFrsSdk\Client\Param\ExternalFieldDefinitions;
 use HuaweiFrsSdk\Common\FrsPaths;
-use Psr\Http\Message\ResponseInterface;
 
 class FaceSetService
 {
@@ -34,11 +34,13 @@ class FaceSetService
         $this->projectId = $projectId;
     }
 
-    public function getAllFaceSets(): ResponseInterface
+    public function getAllFaceSets(): GetFaceSetsResponse
     {
         $uri = sprintf(FrsPaths::FACE_SET_GET_ALL, $this->projectId);
 
-        return $this->accessService->get($uri);
+        $response =  $this->accessService->get($uri);
+
+        return new GetFaceSetsResponse($response);
     }
 
     public function getFaceSet(string $faceSetName): GetFaceSetResponse
