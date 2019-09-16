@@ -24,22 +24,6 @@ class SearchFaceResponse extends AbstractResponse
     {
         $body = $this->body;
 
-        $structure = [
-            'faces' => [
-                [
-                    'face_id',
-                    'external_image_id',
-                    'similarity',
-                    'bounding_box' => [
-                        'width',
-                        'height',
-                        'top_left_x',
-                        'top_left_y',
-                    ],
-                ],
-            ]
-        ];
-
         if (!isset($body['faces'])) {
             throw new ResponseValidationException(
                 $this->response,
@@ -48,7 +32,7 @@ class SearchFaceResponse extends AbstractResponse
         }
 
         foreach ( $body['faces'] as $index => $face ) {
-            foreach ( $structure['faces'][0] as $field ) {
+            foreach ( ['face_id','external_image_id','similarity','bounding_box'] as $field ) {
                 if (!isset($face[$field])) {
                     throw new ResponseValidationException(
                         $this->response,
