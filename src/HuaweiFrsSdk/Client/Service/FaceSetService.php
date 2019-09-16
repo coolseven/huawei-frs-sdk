@@ -4,6 +4,7 @@ namespace HuaweiFrsSdk\Client\Service;
 
 
 use HuaweiFrsSdk\Access\FrsAccess;
+use HuaweiFrsSdk\Access\HttpResponse\FaceSet\DeleteFaceSetResponse;
 use HuaweiFrsSdk\Access\HttpResponse\FaceSet\CreateFaceSetResponse;
 use HuaweiFrsSdk\Access\HttpResponse\FaceSet\GetFaceSetResponse;
 use HuaweiFrsSdk\Client\Param\ExternalFieldDefinitions;
@@ -68,11 +69,13 @@ class FaceSetService
         return new CreateFaceSetResponse($response);
     }
 
-    public function deleteFaceSet(string $faceSetName): ResponseInterface
+    public function deleteFaceSet(string $faceSetName): DeleteFaceSetResponse
     {
         $uri = sprintf(FrsPaths::FACE_SET_DELETE, $this->projectId, $faceSetName);
 
-        return $this->accessService->delete($uri);
+        $response =  $this->accessService->delete($uri);
+
+        return new DeleteFaceSetResponse($response);
     }
 
 }
