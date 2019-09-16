@@ -44,7 +44,7 @@ class GetFaceSetsResponse extends AbstractResponse
                 if (!isset($faceSetInfo[$field])) {
                     throw new ResponseValidationException(
                         $this->response,
-                        "missing {$field} in response body.[{$index}]"
+                        "missing {$field} in response body.face_sets_info.[{$index}]"
                     );
                 }
             }
