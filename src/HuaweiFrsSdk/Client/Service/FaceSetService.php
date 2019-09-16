@@ -5,6 +5,7 @@ namespace HuaweiFrsSdk\Client\Service;
 
 use HuaweiFrsSdk\Access\FrsAccess;
 use HuaweiFrsSdk\Access\HttpResponse\FaceSet\CreateFaceSetResponse;
+use HuaweiFrsSdk\Access\HttpResponse\FaceSet\GetFaceSetResponse;
 use HuaweiFrsSdk\Client\Param\ExternalFieldDefinitions;
 use HuaweiFrsSdk\Common\FrsPaths;
 use Psr\Http\Message\ResponseInterface;
@@ -39,11 +40,13 @@ class FaceSetService
         return $this->accessService->get($uri);
     }
 
-    public function getFaceSet(string $faceSetName): ResponseInterface
+    public function getFaceSet(string $faceSetName): GetFaceSetResponse
     {
         $uri = sprintf(FrsPaths::FACE_SET_GET_ONE, $this->projectId, $faceSetName);
 
-        return $this->accessService->get($uri);
+        $response = $this->accessService->get($uri);
+
+        return new GetFaceSetResponse($response);
     }
 
     public function createFaceSet(
