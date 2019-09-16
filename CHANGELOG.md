@@ -1,5 +1,8 @@
 # Changelog
 
+## 2019-09-17 v1.2.0
+add response validation for some of the apis
+
 ## 2019-09-11 v1.1.0
 add unit tests for face compare services
 
