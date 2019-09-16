@@ -4,6 +4,7 @@ namespace HuaweiFrsSdk\Client\Service;
 
 
 use HuaweiFrsSdk\Access\FrsAccess;
+use HuaweiFrsSdk\Access\HttpResponse\FaceSet\CreateFaceSetResponse;
 use HuaweiFrsSdk\Client\Param\ExternalFieldDefinitions;
 use HuaweiFrsSdk\Common\FrsPaths;
 use Psr\Http\Message\ResponseInterface;
@@ -49,7 +50,7 @@ class FaceSetService
         string $faceSetName,
         int $faceSetCapacity = 100000,
         ExternalFieldDefinitions $createExternalFields = null
-    ): ResponseInterface
+    ): CreateFaceSetResponse
     {
         $uri = sprintf(FrsPaths::FACE_SET_CREATE, $this->projectId);
 
@@ -59,7 +60,9 @@ class FaceSetService
             $body['external_fields'] = $createExternalFields->getExternalFields();
         }
 
-        return $this->accessService->post($uri,$body);
+        $response = $this->accessService->post($uri,$body);
+
+        return new CreateFaceSetResponse($response);
     }
 
     public function deleteFaceSet(string $faceSetName): ResponseInterface
