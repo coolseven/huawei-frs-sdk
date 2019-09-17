@@ -9,7 +9,7 @@ class ExternalFieldDefinitions
     /**
      * @var ExternalFieldDefinition[]
      */
-    private $externalFields;
+    private $externalFields = [];
 
     /**
      * CreateExternalFields constructor.

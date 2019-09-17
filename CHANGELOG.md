@@ -1,5 +1,8 @@
 # Changelog
 
+## 2019-09-17 v1.2.1
+fix validation logic on external_fields
+
 ## 2019-09-17 v1.2.0
 add response validation for some of the apis
 

@@ -9,7 +9,7 @@ class ExternalFields
     /**
      * @var array
      */
-    private $externalFields;
+    private $externalFields = [];
 
     public function __construct(array $externalFields = [])
     {

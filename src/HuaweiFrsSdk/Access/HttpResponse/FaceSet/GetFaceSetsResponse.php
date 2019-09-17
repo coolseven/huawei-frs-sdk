@@ -28,19 +28,9 @@ class GetFaceSetsResponse extends AbstractResponse
             );
         }
 
-        $requiredFields = [
-            'face_set_info' => [
-                'face_number',
-                'face_set_id',
-                'face_set_name',
-                'create_date',
-                'face_set_capacity',
-                'external_fields',
-            ],
-        ];
-
-        foreach ($body['face_sets_info'] as $index => $faceSetInfo) {
-            foreach ($requiredFields['face_set_info'] as $field) {
+        $index = 0;
+        foreach ($body['face_sets_info'] as $faceSetInfo) {
+            foreach (['face_number', 'face_set_id', 'face_set_name', 'create_date', 'face_set_capacity','external_fields'] as $field) {
                 if (!isset($faceSetInfo[$field])) {
                     throw new ResponseValidationException(
                         $this->response,
@@ -48,6 +38,8 @@ class GetFaceSetsResponse extends AbstractResponse
                     );
                 }
             }
+
+            $index ++;
         }
     }
 
