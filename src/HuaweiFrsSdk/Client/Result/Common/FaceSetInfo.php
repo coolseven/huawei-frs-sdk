@@ -5,7 +5,6 @@ namespace HuaweiFrsSdk\Client\Result\Common;
 
 
 use HuaweiFrsSdk\Client\Param\ExternalFieldDefinitions;
-use HuaweiFrsSdk\Client\Param\ExternalFields;
 
 class FaceSetInfo
 {
@@ -71,14 +70,14 @@ class FaceSetInfo
     }
 
     /**
-     * @return ExternalFields
+     * @return ExternalFieldDefinitions
      */
-    public function getExternalFieldDefinitions(): ExternalFields
+    public function getExternalFieldDefinitions(): ExternalFieldDefinitions
     {
         return $this->externalFieldDefinitions;
     }
     /**
-     * @var ExternalFields
+     * @var ExternalFieldDefinitions
      */
     private $externalFieldDefinitions;
 

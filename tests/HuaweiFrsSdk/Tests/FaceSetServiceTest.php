@@ -132,7 +132,7 @@ class FaceSetServiceTest extends PHPUnit_Framework_TestCase
     {
         $frsClient = new FrsClient($this->authInfo,$this->projectId);
 
-        $externalFields = new ExternalFieldDefinitions([
+        $externalFieldDefinitions = new ExternalFieldDefinitions([
             new ExternalFieldDefinition('etf_01',FieldTypes::STRING),
             new ExternalFieldDefinition('etf_02',FieldTypes::DOUBLE),
             new ExternalFieldDefinition('etf_03',FieldTypes::BOOLEAN),
@@ -140,7 +140,11 @@ class FaceSetServiceTest extends PHPUnit_Framework_TestCase
             new ExternalFieldDefinition('etf_05',FieldTypes::INTEGER),
             new ExternalFieldDefinition('etf_06',FieldTypes::LONG),
         ]);
-        $response = $frsClient->getFaceSetService()->createFaceSet($this->tempFaceSetName,100000,$externalFields);
+        $response = $frsClient->getFaceSetService()->createFaceSet(
+            $this->tempFaceSetName,
+            100000,
+            $externalFieldDefinitions
+        );
 
         // {
         //    "face_set_info": {
@@ -176,6 +180,7 @@ class FaceSetServiceTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(200,$response->getStatusCode());
         $this->assertEquals($this->tempFaceSetName,$response->getResult()->getFaceSetInfo()->getName());
         $this->assertEquals(0,$response->getResult()->getFaceSetInfo()->getNumber());
+        $this->assertGreaterThanOrEqual(0,$response->getResult()->getFaceSetInfo()->getExternalFieldDefinitions()->getExternalFieldDefinitions());
     }
 
     public function testDeleteFaceSet(): void
