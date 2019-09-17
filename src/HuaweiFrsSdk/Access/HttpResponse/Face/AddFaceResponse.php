@@ -34,7 +34,6 @@ class AddFaceResponse extends AbstractResponse
         $index = 0;
 
         foreach ( $this->body['faces'] as  $face ) {
-            $index++;
             foreach ( ['face_id','external_image_id','bounding_box'] as $field ) {
                 if (!isset($face[$field])) {
                     throw new ResponseValidationException(
@@ -43,8 +42,9 @@ class AddFaceResponse extends AbstractResponse
                     );
                 }
             }
-        }
 
+            $index++;
+        }
     }
 
     /**
