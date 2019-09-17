@@ -9,7 +9,7 @@ class ExternalFieldDefinitions
     /**
      * @var ExternalFieldDefinition[]
      */
-    private $externalFields = [];
+    private $externalFieldDefinitions = [];
 
     /**
      * CreateExternalFields constructor.
@@ -19,17 +19,17 @@ class ExternalFieldDefinitions
     public function __construct(array $externalFields = [])
     {
         foreach ($externalFields as $externalField) {
-            $this->addExternalField($externalField);
+            $this->addExternalFieldDefinition($externalField);
         }
     }
 
-    public function addExternalField(ExternalFieldDefinition $externalField): void
+    public function addExternalFieldDefinition(ExternalFieldDefinition $externalFieldDefinition): void
     {
-        $this->externalFields[$externalField->getKey()] = ['type' => $externalField->getType()];
+        $this->externalFieldDefinitions[$externalFieldDefinition->getKey()] = ['type' => $externalFieldDefinition->getType()];
     }
 
-    public function getExternalFields(): array
+    public function getExternalFieldDefinitions(): array
     {
-        return $this->externalFields;
+        return $this->externalFieldDefinitions;
     }
 }

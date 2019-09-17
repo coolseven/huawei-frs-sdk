@@ -55,15 +55,15 @@ class FaceSetService
     public function createFaceSet(
         string $faceSetName,
         int $faceSetCapacity = 100000,
-        ExternalFieldDefinitions $createExternalFields = null
+        ExternalFieldDefinitions $externalFieldDefinitions = null
     ): CreateFaceSetResponse
     {
         $uri = sprintf(FrsPaths::FACE_SET_CREATE, $this->projectId);
 
         $body['face_set_name'] = $faceSetName;
         $body['face_set_capacity'] = $faceSetCapacity;
-        if (null !== $createExternalFields && count($createExternalFields->getExternalFields())) {
-            $body['external_fields'] = $createExternalFields->getExternalFields();
+        if (null !== $externalFieldDefinitions && count($externalFieldDefinitions->getExternalFieldDefinitions())) {
+            $body['external_fields'] = $externalFieldDefinitions->getExternalFieldDefinitions();
         }
 
         $response = $this->accessService->post($uri,$body);

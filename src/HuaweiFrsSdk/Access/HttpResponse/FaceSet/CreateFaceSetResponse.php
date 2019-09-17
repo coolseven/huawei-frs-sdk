@@ -44,7 +44,7 @@ class CreateFaceSetResponse extends AbstractResponse
         $externalFieldDefinitions = new ExternalFieldDefinitions();
         if (isset($faceSetInfo['external_fields'])) {
             foreach ($faceSetInfo['external_fields'] as $key => $info) {
-                $externalFieldDefinitions->addExternalField(
+                $externalFieldDefinitions->addExternalFieldDefinition(
                     new ExternalFieldDefinition($key, $info['type'])
                 );
             }

@@ -52,7 +52,7 @@ class GetFaceSetsResponse extends AbstractResponse
             $externalFieldDefinitions = new ExternalFieldDefinitions();
 
             foreach ($faceSetInfo['external_fields'] as $key => $info) {
-                $externalFieldDefinitions->addExternalField(
+                $externalFieldDefinitions->addExternalFieldDefinition(
                     new ExternalFieldDefinition($key, $info['type'])
                 );
             }
