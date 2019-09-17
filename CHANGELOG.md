@@ -1,5 +1,8 @@
 # Changelog
 
+## 2019-09-17 v1.2.2
+Fix Result Type Mismatch on CreateFaceSetResult
+
 ## 2019-09-17 v1.2.1
 fix validation logic on external_fields
 
