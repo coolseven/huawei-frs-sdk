@@ -4,7 +4,9 @@
 namespace HuaweiFrsSdk\Client\Param;
 
 
-class ExternalFieldDefinitions
+use JsonSerializable;
+
+class ExternalFieldDefinitions implements JsonSerializable
 {
     /**
      * @var ExternalFieldDefinition[]
@@ -14,12 +16,12 @@ class ExternalFieldDefinitions
     /**
      * CreateExternalFields constructor.
      *
-     * @param ExternalFieldDefinition[] $externalFields
+     * @param ExternalFieldDefinition[] $externalFieldDefinitions
      */
-    public function __construct(array $externalFields = [])
+    public function __construct(array $externalFieldDefinitions = [])
     {
-        foreach ($externalFields as $externalField) {
-            $this->addExternalFieldDefinition($externalField);
+        foreach ($externalFieldDefinitions as $externalFieldDefinition) {
+            $this->addExternalFieldDefinition($externalFieldDefinition);
         }
     }
 
@@ -29,6 +31,11 @@ class ExternalFieldDefinitions
     }
 
     public function getExternalFieldDefinitions(): array
+    {
+        return $this->externalFieldDefinitions;
+    }
+
+    public function jsonSerialize()
     {
         return $this->externalFieldDefinitions;
     }

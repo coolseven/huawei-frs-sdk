@@ -3,7 +3,9 @@
 namespace HuaweiFrsSdk\Client\Result\Common;
 
 
-class BoundingBox
+use JsonSerializable;
+
+class BoundingBox implements JsonSerializable
 {
     /**
      * @var int
@@ -93,5 +95,15 @@ class BoundingBox
         $this->topLeftY = $topLeftY;
         $this->width = $width;
         $this->height = $height;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'top_left_x' => $this->getTopLeftX(),
+            'top_left_y' => $this->getTopLeftY(),
+            'width' => $this->getWidth(),
+            'height' => $this->getHeight(),
+        ];
     }
 }
