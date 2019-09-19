@@ -14,12 +14,12 @@ class ExternalFieldDefinitions
     /**
      * CreateExternalFields constructor.
      *
-     * @param ExternalFieldDefinition[] $externalFields
+     * @param ExternalFieldDefinition[] $externalFieldDefinitions
      */
-    public function __construct(array $externalFields = [])
+    public function __construct(array $externalFieldDefinitions = [])
     {
-        foreach ($externalFields as $externalField) {
-            $this->addExternalFieldDefinition($externalField);
+        foreach ($externalFieldDefinitions as $externalFieldDefinition) {
+            $this->addExternalFieldDefinition($externalFieldDefinition);
         }
     }
 
