@@ -1,5 +1,8 @@
 # Changelog
 
+## 2019-09-19 v1.3.0
+Add JsonSerialize Ability To Some Classed
+
 ## 2019-09-17 v1.2.2
 Fix Result Type Mismatch on CreateFaceSetResult
 
