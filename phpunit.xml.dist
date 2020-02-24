@@ -20,14 +20,39 @@
         </whitelist>
     </filter>
     <php>
-        <env name="HUAWEI_FRS_AK" value="xxx"/>
-        <env name="HUAWEI_FRS_SK" value="xxx"/>
-        <env name="HUAWEI_FRS_ENDPOINT" value="xxx"/>
-        <env name="HUAWEI_FRS_PROJECT_ID" value="xxx"/>
-        <env name="HUAWEI_FRS_FACE_SET_NAME" value="xxx"/>
-        <env name="HUAWEI_FRS_TEMP_FACE_SET_NAME" value="xxx"/>
-        <env name="HUAWEI_FRS_SEARCH_FACE_ID" value="xxx"/>
-        <env name="HUAWEI_FRS_EXTERNAL_IMAGE_ID" value="xxx"/>
+        <env
+                name="V1_HUAWEI_FRS_AK"
+                value="__your_value_here__"/>
+        <env
+                name="V1_HUAWEI_FRS_SK"
+                value="__your_value_here__"
+        />
+        <env
+                name="V1_HUAWEI_FRS_ENDPOINT"
+                value="__your_value_here__"
+        />
+        <env
+                name="V1_HUAWEI_FRS_PROJECT_ID"
+                value="__your_value_here__"
+        />
+
+
+
+        <env
+                name="V2_HUAWEI_FRS_AK"
+                value="__your_value_here__"/>
+        <env
+                name="V2_HUAWEI_FRS_SK"
+                value="__your_value_here__"
+        />
+        <env
+                name="V2_HUAWEI_FRS_ENDPOINT"
+                value="__your_value_here__"
+        />
+        <env
+                name="V2_HUAWEI_FRS_PROJECT_ID"
+                value="__your_value_here__"
+        />
     </php>
 
 </phpunit>

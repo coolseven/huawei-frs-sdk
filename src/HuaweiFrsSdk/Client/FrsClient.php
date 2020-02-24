@@ -12,6 +12,7 @@ use HuaweiFrsSdk\Client\Service\FaceService;
 use HuaweiFrsSdk\Client\Service\FaceSetService;
 use HuaweiFrsSdk\Client\Service\LiveDetectService;
 use HuaweiFrsSdk\Client\Service\SearchService;
+use HuaweiFrsSdk\Client\Service\V2\ApiCollectionV2;
 
 class FrsClient
 {
@@ -47,6 +48,10 @@ class FrsClient
      * @var LiveDetectService
      */
     private $liveDetectService;
+    /**
+     * @var ApiCollectionV2
+     */
+    private $apiCollectionV2;
 
     /**
      * FrsClient constructor.
@@ -72,6 +77,8 @@ class FrsClient
         $this->detectService = new DetectService($this->frsAccess, $this->projectId);
         $this->compareService = new CompareService($this->frsAccess, $this->projectId);
         $this->liveDetectService = new LiveDetectService($this->frsAccess, $this->projectId);
+
+        $this->apiCollectionV2 = new ApiCollectionV2($this->frsAccess, $this->projectId);
     }
 
     /**
@@ -114,5 +121,13 @@ class FrsClient
     public function getLiveDetectService() : LiveDetectService
     {
         return $this->liveDetectService;
+    }
+
+    /**
+     * @return ApiCollectionV2
+     */
+    public function getApiCollectionV2(): ApiCollectionV2
+    {
+        return $this->apiCollectionV2;
     }
 }

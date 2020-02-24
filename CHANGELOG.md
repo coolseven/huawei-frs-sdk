@@ -1,5 +1,9 @@
 # Changelog
 
+## 2020-02-21 v1.4.0
+- Add Frs Services V2 Support
+- No Breaking Changes
+
 ## 2019-09-19 v1.3.0
 Add JsonSerialize Ability To Some Classed
 

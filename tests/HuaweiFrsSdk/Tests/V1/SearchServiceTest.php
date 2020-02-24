@@ -1,13 +1,14 @@
 <?php
 
-namespace HuaweiFrsSdk\Tests;
+namespace HuaweiFrsSdk\Tests\V1;
 
 
+use Exception;
 use HuaweiFrsSdk\Client\Param\AuthInfo;
 use HuaweiFrsSdk\Client\FrsClient;
-use PHPUnit_Framework_TestCase;
+use HuaweiFrsSdk\Tests\BaseTestCase;
 
-class SearchServiceTest extends PHPUnit_Framework_TestCase
+class SearchServiceTest extends BaseTestCase
 {
     /**
      * @var string
@@ -30,35 +31,38 @@ class SearchServiceTest extends PHPUnit_Framework_TestCase
      * @var string
      */
     private $projectId;
-    /**
-     * @var string
-     */
-    private $faceSetName;
-    /**
-     * @var string
-     */
-    private $faceId;
 
     public function setUp()
     {
-        $this->ak = getenv('HUAWEI_FRS_AK') ;
-        $this->sk = getenv('HUAWEI_FRS_SK') ;
-        $this->endpoint = getenv('HUAWEI_FRS_ENDPOINT') ;
+        $this->ak = getenv('V1_HUAWEI_FRS_AK') ;
+        $this->sk = getenv('V1_HUAWEI_FRS_SK') ;
+        $this->endpoint = getenv('V1_HUAWEI_FRS_ENDPOINT') ;
 
         $this->authInfo = new AuthInfo($this->endpoint,$this->ak,$this->sk);
 
-        $this->projectId = getenv('HUAWEI_FRS_PROJECT_ID');
-        $this->faceSetName = getenv('HUAWEI_FRS_FACE_SET_NAME');
-        $this->faceId = getenv('HUAWEI_FRS_SEARCH_FACE_ID');
+        $this->projectId = getenv('V1_HUAWEI_FRS_PROJECT_ID');
     }
 
+    /**
+     * @throws Exception
+     */
     public function testSearchByImageBase64(): void
     {
-        $imageBase64 = base64_encode(file_get_contents(__DIR__.'/images/donald_trump.jpeg'));
-
         $frsClient = new FrsClient($this->authInfo,$this->projectId);
 
-        $response = $frsClient->getSearchService()->searchFaceByBase64($this->faceSetName,$imageBase64,100);
+        $faceSetName = $this->randomFaceSetName();
+
+        $this->createV1FaceSet($frsClient,$faceSetName);
+
+        $this->addTestFaceByBase64V1($frsClient,$faceSetName);
+
+        $imageBase64 = base64_encode(
+            file_get_contents(__DIR__.'/../images/donald_trump.jpeg')
+        );
+
+        $response = $frsClient
+            ->getSearchService()
+            ->searchFaceByBase64($faceSetName,$imageBase64,100);
 
         // {
         //    "faces": [
@@ -86,16 +90,32 @@ class SearchServiceTest extends PHPUnit_Framework_TestCase
         //        }
         //    ]
         //}
-        echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
         $this->assertGreaterThanOrEqual(0,count($response->getResult()->getComplexFaces()));
+
+        $this->deleteV1FaceSet($frsClient,$faceSetName);
     }
 
+    /**
+     * @throws Exception
+     */
     public function testSearchByFaceId(): void
     {
         $frsClient = new FrsClient($this->authInfo,$this->projectId);
-        $response = $frsClient->getSearchService()->searchFaceByFaceId($this->faceSetName,$this->faceId,1000,0.99);
+
+        $faceSetName = $this->randomFaceSetName();
+
+        $this->createV1FaceSet($frsClient,$faceSetName);
+
+        $faceId = ($this->addTestFaceByBase64V1($frsClient,$faceSetName)
+                       ->getResult()
+                       ->getFaces()[0]
+        )->getFaceId();
+
+        $response = $frsClient
+            ->getSearchService()
+            ->searchFaceByFaceId($faceSetName,$faceId,1000,0.99);
 
         // {
         //    "faces": [
@@ -112,9 +132,10 @@ class SearchServiceTest extends PHPUnit_Framework_TestCase
         //        }
         //    ]
         //}
-        echo '>>>>>>>>>>>>' .PHP_EOL.var_export($response->getBody()->getContents(),true).PHP_EOL.'<<<<<<<<<<<<'.PHP_EOL;
 
         $this->assertEquals(200,$response->getStatusCode());
         $this->assertGreaterThanOrEqual(0,count($response->getResult()->getComplexFaces()));
+
+        $this->deleteV1FaceSet($frsClient,$faceSetName);
     }
 }

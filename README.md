@@ -20,7 +20,15 @@ composer require coolseven/huawei-frs-sdk
     $frsClient = new FrsClient($authInfo,$projectId);
     
     // get face set list
-    $response = $frsClient->getFaceSetService()->getAllFaceSets();
+    // v1 版本: 
+    $responseOfV1 = $frsClient
+        ->getFaceSetService()
+        ->getAllFaceSets();
+
+    // v2 版本: 
+    $responseOfV2 = $frsClient->getApiCollectionV2()
+        ->getFaceSetService()
+        ->getAllFaceSets();
 ```
 
 More usage demos can be found at `tests`

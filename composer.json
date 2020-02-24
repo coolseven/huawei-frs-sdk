@@ -20,10 +20,19 @@
         "guzzlehttp/guzzle": "^6.3"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.0"
+        "phpunit/phpunit": "~4.0",
+        "ramsey/uuid": "^3.9",
+        "moontoast/math": "^1.2"
     },
     "autoload": {
-        "psr-4": {"HuaweiFrsSdk\\": "src/HuaweiFrsSdk"},
+        "psr-4": {
+            "HuaweiFrsSdk\\": "src/HuaweiFrsSdk"
+        },
         "files": ["src/HuaweiFrsSdk/functions.php"]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "HuaweiFrsSdk\\": "tests/HuaweiFrsSdk"
+        }
     }
 }
