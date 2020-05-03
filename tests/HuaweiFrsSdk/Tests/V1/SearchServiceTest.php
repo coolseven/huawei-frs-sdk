@@ -113,6 +113,8 @@ class SearchServiceTest extends BaseTestCase
                        ->getFaces()[0]
         )->getFaceId();
 
+        sleep(2);
+
         $response = $frsClient
             ->getSearchService()
             ->searchFaceByFaceId($faceSetName,$faceId,1000,0.99);

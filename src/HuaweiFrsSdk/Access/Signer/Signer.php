@@ -10,6 +10,7 @@ use HuaweiFrsSdk\Access\HttpRequest\UnSignedRequest;
 class Signer
 {
     private const HEADER_X_SDK_DATE    = 'X-Sdk-Date';
+    private const HEADER_X_PROJECT_ID  = 'X-Project-Id';
     private const HEADER_AUTHORIZATION = 'Authorization';
 
     private const DATE_FORMAT              = 'Ymd\THis\Z';
@@ -21,17 +22,23 @@ class Signer
      * @var string
      */
     private $sk;
+    /**
+     * @var string
+     */
+    private $projectId;
 
     /**
      * Signer constructor.
      *
      * @param string $ak
      * @param string $sk
+     * @param string $projectId
      */
-    public function __construct( string $ak, string $sk )
+    public function __construct( string $ak, string $sk, string $projectId )
     {
         $this->ak = $ak;
         $this->sk = $sk;
+        $this->projectId = $projectId;
     }
 
     /**
@@ -58,6 +65,11 @@ class Signer
 
         /** @var SignedRequest $signed */
         $signed = $signed->withAddedHeader(self::HEADER_X_SDK_DATE,date(self::DATE_FORMAT,$timestamp));
+
+        $signed = $signed->withAddedHeader(
+            self::HEADER_X_PROJECT_ID,
+                $this->projectId
+        );
 
         /** @var SignedRequest $signed */
         $signed = $signed->withAddedHeader(self::HEADER_AUTHORIZATION,$this->calcAuthorizationHeader($signed,$timestamp));

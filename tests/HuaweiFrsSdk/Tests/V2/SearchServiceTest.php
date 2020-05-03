@@ -114,6 +114,8 @@ class SearchServiceTest extends BaseTestCase
                        ->getFaces()[0]
         )->getFaceId();
 
+        sleep(2);
+
         $response = $frsClient
             ->getApiCollectionV2()
             ->getSearchService()

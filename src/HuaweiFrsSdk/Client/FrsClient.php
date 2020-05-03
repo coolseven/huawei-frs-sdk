@@ -64,7 +64,7 @@ class FrsClient
     {
         $this->projectId = $projectId;
 
-        $this->frsAccess = new FrsAccess($authInfo, $connectionTimeout);
+        $this->frsAccess = new FrsAccess($authInfo, $connectionTimeout,$projectId);
 
         $this->initServices();
     }

@@ -166,6 +166,8 @@ class FaceServiceTest extends BaseTestCase
 
         $this->addTestFaceByBase64V1($frsClient,$faceSetName);
 
+        sleep(2);
+
         $response = $frsClient
             ->getFaceService()
             ->getFaces($faceSetName,$offset,$limit);
@@ -209,6 +211,10 @@ class FaceServiceTest extends BaseTestCase
 
         $this->assertEquals(200,$response->getStatusCode());
 
+        $body = json_decode($response->getBody()->getContents(),true);
+        $this->assertArrayHasKey('faces',$body);
+        $this->assertGreaterThan(0,count($body['faces']));
+
         $this->deleteV1FaceSet($frsClient,$faceSetName);
     }
 
@@ -227,6 +233,8 @@ class FaceServiceTest extends BaseTestCase
                       ->getResult()
                       ->getFaces()[0]
         )->getFaceId();
+
+        sleep(2);
 
         $response = $frsClient
             ->getFaceService()
@@ -255,6 +263,7 @@ class FaceServiceTest extends BaseTestCase
         //}
 
         $this->assertEquals(200,$response->getStatusCode());
+        $this->assertEquals($faceId,$response->getResult()->getFace()->getFaceId());
 
         $this->deleteV1FaceSet($frsClient,$faceSetName);
     }
@@ -274,6 +283,8 @@ class FaceServiceTest extends BaseTestCase
                        ->getResult()
                        ->getFaces()[0]
         )->getFaceId();
+
+        sleep(2);
 
         $response = $frsClient
             ->getFaceService()
@@ -315,6 +326,8 @@ class FaceServiceTest extends BaseTestCase
                        ->getFaces()[0]
         )->getFaceId();
 
+        sleep(2);
+
         $response = $frsClient
             ->getFaceService()
             ->deleteFaceByFaceId($faceSetName,$faceId);
@@ -345,6 +358,8 @@ class FaceServiceTest extends BaseTestCase
                                 ->getResult()
                                 ->getFaces()[0]
         )->getExternalImageId();
+
+        sleep(2);
 
         $response = $frsClient
             ->getFaceService()
@@ -389,6 +404,8 @@ class FaceServiceTest extends BaseTestCase
                 ])
             )
         ;
+
+        sleep(2);
 
         $response = $frsClient
             ->getFaceService()

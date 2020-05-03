@@ -34,12 +34,13 @@ class FrsAccess
      *
      * @param AuthInfo $authInfo
      * @param int      $connectionTimeout
+     * @param string   $projectId
      */
-    public function __construct( AuthInfo $authInfo, int $connectionTimeout )
+    public function __construct( AuthInfo $authInfo, int $connectionTimeout,string $projectId )
     {
         $this->authInfo = $authInfo;
 
-        $this->signer = new Signer($authInfo->getAk(), $authInfo->getSk());
+        $this->signer = new Signer($authInfo->getAk(), $authInfo->getSk(),$projectId);
 
         $this->httpClient = new GuzzleClient($connectionTimeout);
     }

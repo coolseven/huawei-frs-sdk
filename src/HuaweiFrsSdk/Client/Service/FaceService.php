@@ -6,6 +6,7 @@ namespace HuaweiFrsSdk\Client\Service;
 
 use HuaweiFrsSdk\Access\FrsAccess;
 use HuaweiFrsSdk\Access\HttpResponse\Face\AddFaceResponse;
+use HuaweiFrsSdk\Access\HttpResponse\Face\GetFaceResponse;
 use HuaweiFrsSdk\Client\Param\ExternalFields;
 use HuaweiFrsSdk\Common\FrsPaths;
 use HuaweiFrsSdk\Common\ImageTypes;
@@ -42,11 +43,13 @@ class FaceService
         return $this->accessService->get($uri);
     }
 
-    public function getFace(string $faceSetName, string $faceId): ResponseInterface
+    public function getFace(string $faceSetName, string $faceId): GetFaceResponse
     {
         $uri = sprintf(FrsPaths::FACE_GET_ONE, $this->projectId, $faceSetName, $faceId);
 
-        return $this->accessService->get($uri);
+        $response = $this->accessService->get($uri);
+
+        return new GetFaceResponse($response);
     }
 
     public function addFaceByBase64(

@@ -168,6 +168,8 @@ class FaceServiceTest extends BaseTestCase
 
         $this->addTestFaceByBase64V2($frsClient,$faceSetName);
 
+        sleep(2);
+
         $response = $frsClient
             ->getApiCollectionV2()
             ->getFaceService()
@@ -212,6 +214,10 @@ class FaceServiceTest extends BaseTestCase
 
         $this->assertEquals(200,$response->getStatusCode());
 
+        $body = json_decode($response->getBody()->getContents(),true);
+        $this->assertArrayHasKey('faces',$body);
+        $this->assertGreaterThan(0,count($body['faces']));
+
         $this->deleteV2FaceSet($frsClient,$faceSetName);
     }
 
@@ -230,6 +236,8 @@ class FaceServiceTest extends BaseTestCase
                       ->getResult()
                       ->getFaces()[0]
         )->getFaceId();
+
+        sleep(2);
 
         $response = $frsClient
             ->getApiCollectionV2()
@@ -259,7 +267,7 @@ class FaceServiceTest extends BaseTestCase
         //}
 
         $this->assertEquals(200,$response->getStatusCode());
-
+        $this->assertEquals($faceId,$response->getResult()->getFace()->getFaceId());
         $this->deleteV2FaceSet($frsClient,$faceSetName);
     }
 
@@ -278,6 +286,8 @@ class FaceServiceTest extends BaseTestCase
                        ->getResult()
                        ->getFaces()[0]
         )->getFaceId();
+
+        sleep(2);
 
         $response = $frsClient
             ->getApiCollectionV2()
@@ -320,6 +330,8 @@ class FaceServiceTest extends BaseTestCase
                        ->getFaces()[0]
         )->getFaceId();
 
+        sleep(2);
+
         $response = $frsClient
             ->getApiCollectionV2()
             ->getFaceService()
@@ -351,6 +363,8 @@ class FaceServiceTest extends BaseTestCase
                                 ->getResult()
                                 ->getFaces()[0]
         )->getExternalImageId();
+
+        sleep(2);
 
         $response = $frsClient
             ->getApiCollectionV2()
@@ -397,6 +411,8 @@ class FaceServiceTest extends BaseTestCase
                 ])
             )
         ;
+
+        sleep(2);
 
         $response = $frsClient
             ->getApiCollectionV2()
